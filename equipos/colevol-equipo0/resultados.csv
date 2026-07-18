@@ -1,0 +1,2 @@
+"equipo","respuesta","predictor","estimado","error_estandar","ic_inferior","ic_superior","valor_p","n","modelo","lambda","arbol"
+"colevol-equipo0","log(masa corporal)","altitud, punto medio del rango normal, en km",0.0881391721418361,0.0288535644174402,0.0315872250580468,0.144691119225625,0.00248336682451601,266,"PGLS, lambda de Pagel estimada",0.866382577534167,"McGuire et al. 2014"
