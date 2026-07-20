@@ -29,13 +29,13 @@ sessionInfo()
 # git config --global user.email "tu@correo.com"
 
 # GitHub no acepta contrasena desde la terminal. Necesitas un token
-install.packages(c("usethis", "gitcreds"))
+# install.packages(c("usethis", "gitcreds"))
 
 # Abre GitHub para que generes el token. Copialo antes de cerrar la pagina
-usethis::create_github_token()
+# usethis::create_github_token()
 
 # Pega el token aqui
-gitcreds::gitcreds_set()
+# gitcreds::gitcreds_set()
 
 # El ciclo completo, desde la terminal de RStudio, pestaña Terminal
 # git clone [URL]

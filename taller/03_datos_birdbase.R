@@ -65,7 +65,7 @@ plot(colibries$altitud, log(colibries$masa), pch = 16, col = rgb(0, 0, 0, 0.4),
 # Una regresion normal. Ignora la filogenia, y por eso puede ser incorrecta
 summary(lm(log(masa) ~ altitud, data = colibries))
 
-# Manana vemos por que puede dar parametros incorrectos y como se corrige
+# Mañana vemos por que puede dar parametros incorrectos y como se corrige
 completos <- colibries[!is.na(colibries$masa) & !is.na(colibries$altitud), ]
 nrow(completos)
 
