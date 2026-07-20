@@ -3,7 +3,7 @@
 .RData
 .Ruserdata
 datos/colibries_limpio.csv
+equipos/mi-ciudad-equipoNN/*
 *.Rproj
-equipos/mi-ciudad-equipoNN
 datos/colibries_listo.RData
 .DS_Store

@@ -49,4 +49,7 @@ sessionInfo()
 # git status te dice donde estas en ese momento Usalo entre cada paso
 
 # Trabaja solo dentro de tu carpeta y los conflictos son casi imposibles
-dir.create("equipos/mi-ciudad-equipoNN", recursive = TRUE, showWarnings = FALSE)
+salida <- "equipos/mi-ciudad-equipoNN"
+dir.create(salida, recursive = TRUE, showWarnings = FALSE)
+writeLines(capture.output(sessionInfo()), file.path(salida, "sessionInfo.txt"))
+
