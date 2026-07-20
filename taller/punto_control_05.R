@@ -1,11 +1,11 @@
-# Punto de control despues del bloque 5. Arbol y datos empatados
+# Punto de control despues del bloque 5. Arbol y datos emparejados
 # Cargalo si te atrasaste y sigue con el resto del grupo
 
 library(ape)
 
 if (!file.exists("datos/colibries_limpio.csv")) source("taller/puntos_control/punto_control_03.R")
 
-arbol <- read.tree("datos/arboles/hum294.tre")
+arbol <- read.tree("datos/arboles/McTavish.tre")
 datos <- read.csv("datos/colibries_limpio.csv", stringsAsFactors = FALSE)
 
 datos$especie_arbol <- gsub(" ", "_", datos$especie)

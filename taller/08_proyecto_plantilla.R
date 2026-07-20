@@ -5,11 +5,13 @@
 library(ape)
 library(nlme)
 
-equipo <- "ciudad-equipoNN"
+# Ciudades: bogota, barranquilla, pasto, quibdo
+
+equipo <- "mi-ciudad-equipoNN" # Tienes que modificar la ciudad y el numero
 salida <- file.path("equipos", equipo)
 
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
-colibries <- datos[datos$Family == "Trochilidae", ]
+colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 
 
 # --- DECISION 1. Que columna de masa -----------------------------------------
@@ -44,8 +46,10 @@ norm_min <- convertir_altitud(colibries$"NormMin")
 norm_max <- convertir_altitud(colibries$"NormMax")
 altitud <- (norm_min + norm_max) / 2
 
+colibries$"Scientific Name" <- colibries$`Latin (BirdLife > IOC > Clements>AviList)`
+
 tabla <- data.frame(
-  especie = colibries$"Scientific Name",
+  especie = colibries$`Scientific Name`,
   log_masa = log_masa,
   altitud_km = altitud / 1000,
   stringsAsFactors = FALSE
@@ -56,7 +60,7 @@ tabla <- data.frame(
 # McGuire et al. 2014, rtrees con Jetz et al. 2012, megatree de McTavish 2025
 # Y si usas uno solo o una muestra de la posterior
 
-arbol <- read.tree("datos/arboles/hum294.tre")
+arbol <- read.tree("datos/arboles/McTavish.tre")
 
 
 # --- DECISION 7. Como empatar los nombres ------------------------------------
@@ -129,3 +133,11 @@ abline(coef(modelo), lwd = 2)
 dev.off()
 
 writeLines(capture.output(sessionInfo()), file.path(salida, "sessionInfo.txt"))
+
+# Guarda este archivo como analisis.R tu carpeta de trabajo. Este es el path
+file.path(salida, "analisis.r")
+
+# Ahora copiamos el template de decisiones.csv a tu capeta. No olvides llenarlo
+file.path(salida, "decisiones.csv")
+
+

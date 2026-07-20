@@ -1,14 +1,10 @@
 # Colibríes, altitud y masa corporal: un estudio de múltiples analistas
 
-Este repositorio reúne el trabajo de los talleres de métodos comparativos filogenéticos y ciencia de datos que estamos dictando en varias ciudades del país. Todos los equipos responden la misma pregunta con los mismos datos, pero cada uno decide cómo analizarlos. Lo que nos interesa medir no es la respuesta de un equipo en particular, sino cuánto se mueve la conclusión según las decisiones analíticas que cada quien tomó por su cuenta.
-
-La idea viene de estudios similares en psicología, neuroimágenes y ecología, donde varios equipos independientes analizan el mismo conjunto de datos y llegan a resultados distintos. En métodos comparativos filogenéticos nadie lo ha hecho, y los grados de libertad aquí son enormes: qué árbol usar, cómo tratar los datos faltantes, qué modelo de evolución asumir, cómo resumir un rango altitudinal, la masa, en un solo número. Cada una de esas decisiones es defendible y cada una puede cambiar el resultado.
+Este repositorio reúne el trabajo de los talleres de métodos comparativos filogenéticos y ciencia de datos en `MacroData`. Todos los equipos responden la misma pregunta con los mismos datos, pero cada uno decide cómo analizarlos. Lo que nos interesa medir no es la respuesta de un equipo en particular, sino cuánto se mueve la conclusión según las decisiones analíticas que cada quien tomó por su cuenta.
 
 ## La pregunta
 
 ¿La altitud predice la masa corporal en Trochilidae?
-
-La pregunta es fija. Ningún equipo la modifica, la amplía ni la reemplaza.
 
 ## Los datos
 
@@ -32,7 +28,7 @@ Los tres usan taxonomías distintas y ninguno coincide exactamente con la de BIR
 
 ## Lo que decide cada equipo
 
-Nada de esto viene resuelto. Estas son las decisiones que esperamos que difieran entre equipos y son, en buena medida, el objeto del estudio:
+Nada de esto viene resuelto. Estas son algunas de las decisiones que esperamos que difieran entre equipos y son, en buena medida, el objeto del estudio:
 
 - Qué columna de masa usar, y si transformarla.
 - Cómo resumir la altitud en una sola variable: mínimo, máximo, punto medio, amplitud, o alguna combinación.
@@ -68,7 +64,7 @@ Cada equipo trabaja únicamente dentro de su propia carpeta.
 ## Cómo contribuir
 
 1. Clona el repositorio y crea una rama con el nombre de tu equipo.
-2. Trabaja dentro de `equipos/tu-ciudad-tu-equipo/`.
+2. Trabaja dentro de `equipos/tu-ciudad-tu-equipo/`. *No modifiques nada más*
 3. Escribe el análisis en `analisis.R`. Debe correr de principio a fin en una sesión limpia de R, leyendo desde `datos/` y escribiendo sus salidas en tu carpeta. Si no corre en la máquina de otra persona, no lo podemos usar.
 4. Llena `decisiones.csv` a medida que avanzas, no al final.
 5. Guarda los resultados en `resultados.csv` con el formato descrito abajo.
@@ -102,5 +98,5 @@ Es autor quien cumpla las tres condiciones:
 2. Revisar y aprobar el borrador final del manuscrito.
 3. Responder a la solicitud de aprobación dentro del plazo que se anuncie.
 
-Quien cumpla algunas pero no todas queda en los agradecimientos. El orden de autoría es alfabético después de los primeros nombres, con una nota en el manuscrito explicando el criterio.
+Quien cumpla algunas pero no todas queda en los agradecimientos. El orden de autoría es alfabético con una nota en el manuscrito explicando el criterio.
 

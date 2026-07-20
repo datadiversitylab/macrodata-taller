@@ -2,7 +2,7 @@
 
 library(ape)
 
-arbol <- read.tree("datos/arboles/hum294.tre")
+arbol <- read.tree("datos/arboles/McTavish.tre")
 
 # Un objeto phylo es una lista con cuatro partes
 class(arbol)
@@ -28,6 +28,7 @@ is.ultrametric(arbol)
 any(arbol$edge.length == 0)
 
 # Politomias. Varias funciones exigen un arbol binario
+is.binary(arbol)
 arbol_resuelto <- multi2di(arbol)
 is.binary(arbol_resuelto)
 
@@ -57,14 +58,14 @@ datos$especie_arbol <- gsub(" ", "_", datos$especie)
 en_ambos <- intersect(arbol$tip.label, datos$especie_arbol)
 length(en_ambos)
 
-# Los que no empataron. Miralos, no los ignores
+# Los que no empataron hay que mirar porque, no ignorarlos
 setdiff(datos$especie_arbol, arbol$tip.label)
 setdiff(arbol$tip.label, datos$especie_arbol)
 
 arbol <- drop.tip(arbol, setdiff(arbol$tip.label, en_ambos))
 datos <- datos[datos$especie_arbol %in% en_ambos, ]
 
-# El paso mas peligroso del taller
+# Uno de los pasos mas importantes del taller
 rownames(datos) <- datos$especie_arbol
 datos <- datos[arbol$tip.label, ]
 
@@ -72,5 +73,7 @@ datos <- datos[arbol$tip.label, ]
 all(rownames(datos) == arbol$tip.label)
 
 geiger::name.check(arbol, datos)
+
+# Tambien pudimos haber usado treedata() en geiger :) revisalo
 
 save(arbol, datos, file = "datos/colibries_listo.RData")

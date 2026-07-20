@@ -37,7 +37,7 @@ usethis::create_github_token()
 # Pega el token aqui
 gitcreds::gitcreds_set()
 
-# El ciclo completo, desde la terminal de RStudio, pestana Terminal
+# El ciclo completo, desde la terminal de RStudio, pestaña Terminal
 # git clone [URL]
 # git checkout -b mi-ciudad-equipoNN
 # git add .
@@ -46,7 +46,7 @@ gitcreds::gitcreds_set()
 
 # Y despues el pull request desde la pagina de GitHub
 
-# git status te dice donde estas parado. Usalo entre cada paso
+# git status te dice donde estas en ese momento Usalo entre cada paso
 
 # Trabaja solo dentro de tu carpeta y los conflictos son casi imposibles
 dir.create("equipos/mi-ciudad-equipoNN", recursive = TRUE, showWarnings = FALSE)

@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+datos/colibries_limpio.csv
+*.Rproj
+equipos/mi-ciudad-equipoNN
+datos/colibries_listo.RData

@@ -1,6 +1,6 @@
 # Dia 2, bloque 4. Entrega
 
-equipo <- "ciudad-equipoNN"
+equipo <- "mi-ciudad-equipoNN"
 salida <- file.path("equipos", equipo)
 
 # Antes de entregar, reinicia R con Ctrl+Shift+F10 y corre tu analisis completo
@@ -45,4 +45,4 @@ list.files(salida)
 
 # Tienes cuatro semanas si no alcanzaste a terminar hoy
 # Los tres requisitos para ser autor estan en el README del repositorio
-# El grupo de WhatsApp queda abierto. Uselo
+# El grupo de Mattermost queda abierto. Usalo

@@ -12,7 +12,7 @@ length(masas)
 class(masas)
 class(especies)
 
-# Los vectores se operan completos, sin ciclos
+# Los vectores se operan completos, sin loops
 masas * 2
 log(masas)
 masas > 5
@@ -67,12 +67,12 @@ if (mean(colibries$masa) > 5) {
   print("Colibries livianos")
 }
 
-# Ciclos. Utiles, pero en R casi siempre hay algo mejor
+# Loops. Utiles, pero en R casi siempre hay algo mejor
 for (i in 1:nrow(colibries)) {
   print(colibries$especie[i])
 }
 
-# Esto hace lo mismo sin ciclo
+# Esto hace lo mismo sin loop
 sapply(colibries, class)
 tapply(colibries$masa, colibries$masa > 5, mean)
 

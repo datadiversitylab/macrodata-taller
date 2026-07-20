@@ -1,4 +1,4 @@
-# Dia 2, bloque 1. Senal filogenetica y modelos de evolucion
+# Dia 2, bloque 1. Señal filogenetica y modelos de evolucion
 
 library(ape)
 library(geiger)
@@ -15,7 +15,7 @@ masa <- setNames(datos$log_masa, rownames(datos))
 altitud <- setNames(datos$altitud, rownames(datos))
 
 
-# --- Senal filogenetica ------------------------------------------------------
+# --- Señal filogenetica ------------------------------------------------------
 
 # Cuanto se parecen las especies emparentadas
 phylosig(arbol, masa, method = "lambda", test = TRUE)
@@ -23,7 +23,7 @@ phylosig(arbol, masa, method = "K", test = TRUE)
 
 phylosig(arbol, altitud, method = "lambda", test = TRUE)
 
-# Lambda va de 0 a 1. Uno es movimiento browniano puro, cero es ninguna senal
+# Lambda va de 0 a 1. Uno es movimiento browniano puro, cero es ninguna señal
 
 # Verlo ayuda mas que el numero
 contMap(arbol, masa, fsize = 0.3)

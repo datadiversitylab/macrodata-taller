@@ -3,13 +3,13 @@
 
 library(ape)
 
-arbol <- read.tree("datos/arboles/hum294.tre")
+arbol <- read.tree("datos/arboles/McTavish.tre")
 
 arbol
 
 plot(arbol, cex = 0.3, no.margin = TRUE)
 
-# En abanico se ven mejor las 294 especies
+# En abanico se ven mejor las especies
 plot(arbol, type = "fan", cex = 0.25, no.margin = TRUE)
 
 # Eso que acabas de graficar es la historia evolutiva de los colibries

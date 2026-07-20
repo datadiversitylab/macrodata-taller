@@ -3,18 +3,18 @@
 # check.names = FALSE conserva los nombres originales, que tienen espacios
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
 
-# Mirar antes de tocar. Siempre
+# Mirar antes de modificar. Siempre
 dim(datos)
 str(datos[, 1:10])
 names(datos)
 
-# Solo colibries
-colibries <- datos[datos$Family == "Trochilidae", ]
+# Asegurandonos que solo sean colibries
+colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 nrow(colibries)
 
 # Nos quedamos con lo que vamos a usar y le ponemos nombres manejables
 colibries <- data.frame(
-  especie = colibries$"Scientific Name",
+  especie = colibries$`Latin (BirdLife > IOC > Clements>AviList)`,
   masa = colibries$"Average Mass",
   masa_min_macho = colibries$"Male MinMass",
   masa_max_macho = colibries$"Male MaxMass",
@@ -27,7 +27,7 @@ colibries <- data.frame(
 
 str(colibries)
 
-# Aqui esta la trampa. La altitud no siempre es un numero
+# La altitud puede que no siempre sea un numero
 head(sort(unique(colibries$norm_min)))
 table(colibries$norm_min[is.na(suppressWarnings(as.numeric(colibries$norm_min)))])
 
@@ -47,7 +47,7 @@ colibries$norm_max <- convertir_altitud(colibries$norm_max)
 # Convertir letras a numeros es una decision, no un paso obligatorio
 colibries$altitud <- (colibries$norm_min + colibries$norm_max) / 2
 
-# Cuanto falta y donde
+# Cuanto falta y donde (missing data)
 sum(is.na(colibries$masa))
 sum(is.na(colibries$altitud))
 colSums(is.na(colibries))
@@ -62,10 +62,10 @@ hist(log(colibries$masa), breaks = 30, main = "log masa", xlab = "log gramos")
 plot(colibries$altitud, log(colibries$masa), pch = 16, col = rgb(0, 0, 0, 0.4),
      xlab = "Altitud (m)", ylab = "log masa (g)")
 
-# Una regresion normal. Ignora la filogenia, y por eso esta mal
+# Una regresion normal. Ignora la filogenia, y por eso puede ser incorrecta
 summary(lm(log(masa) ~ altitud, data = colibries))
 
-# Manana vemos por que esta mal y como se corrige
+# Manana vemos por que puede dar parametros incorrectos y como se corrige
 completos <- colibries[!is.na(colibries$masa) & !is.na(colibries$altitud), ]
 nrow(completos)
 

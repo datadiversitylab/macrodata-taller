@@ -1,5 +1,5 @@
 # Dia 2, bloque 2. PGLS de principio a fin
-# Este es el ejemplo guiado. En la tarde haces el tuyo con otras decisiones
+# Este es el ejemplo guiado. En la tarde hacemos el tuyo con otras decisiones
 
 library(ape)
 library(nlme)
@@ -18,7 +18,7 @@ all(rownames(datos) == arbol$tip.label)
 normal <- lm(log_masa ~ altitud_km, data = datos)
 summary(normal)
 
-# Los residuales tienen senal filogenetica, y eso es justo lo que no puede pasar
+# Los residuales tienen señal filogenetica, y eso es justo lo que no puede pasar
 phytools::phylosig(arbol, setNames(residuals(normal), rownames(datos)),
                    method = "lambda", test = TRUE)
 

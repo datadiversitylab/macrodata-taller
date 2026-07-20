@@ -2,10 +2,10 @@
 # Cargalo si te atrasaste y sigue con el resto del grupo
 
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
-colibries <- datos[datos$Family == "Trochilidae", ]
+colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 
 colibries <- data.frame(
-  especie = colibries$"Scientific Name",
+  especie = colibries$`Latin (BirdLife > IOC > Clements>AviList)`,
   masa = colibries$"Average Mass",
   norm_min = colibries$"NormMin",
   norm_max = colibries$"NormMax",
