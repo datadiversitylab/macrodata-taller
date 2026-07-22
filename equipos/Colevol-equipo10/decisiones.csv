@@ -1,0 +1,13 @@
+equipo;decision;opcion;alternativas;justificacion;momento;
+bogota-equipo10;Fuente de masa corporal;Promedio entre masa máxima y mínima de machos;"Male MinMass y Male MaxMass; promedio de machos y hembras por separado; punto medio de Unsexed MinMass y Unsexed MaxMass";Average Mass ya integra machos, hembras e individuos sin sexar y es la columna con menos datos faltantes. Usar solo machos habría reducido la muestra sin una razón biológica clara para esta pregunta.;antes;
+bogota-equipo10;Transformación de la masa;Square Mass;"Sin transformar; raíz cuadrada";La masa en colibríes va de menos de 2 g a más de 20 g y la distribución tiene una cola larga a la derecha. El log deja los residuales aproximadamente simétricos.;Despues;
+bogota-equipo10;Resumen de la altitud;Elevational Range;"NormMin sola; NormMax sola; punto medio de Xmin y Xmax; Punto medio de NormMin y NormMax";Elevational range nos permite evaluar si el tamaño de acho estaria relacionado a un comportamiento de ocupación de rango altitudinal mayor;antes;
+bogota-equipo10;Especies con límites codificados como letra;No necesario;" F y M al punto medio del intervalo; Convertir L";Datos crudos no tienen letras;antes;
+bogota-equipo10;Especies con masa o altitud faltante;Eliminación por caso completo;"Imputación por género; imputación filogenética con phylopars";No teníamos tiempo en el taller para evaluar la imputación con cuidado y preferimos una decisión transparente antes que una sofisticada mal hecha.;antes;
+bogota-equipo10;Árbol filogenético;McGuire et al. 2014;"Distribución posterior de Jetz et al. 2012 vía rtrees; megatree de McTavish et al. 2025";Por tener el mayor número de especies;antes;
+bogota-equipo10;Número de árboles;Uno solo;Muestra de 100 árboles de la posterior;El árbol de McGuire es un solo árbol de consenso. Reconocemos que esto ignora la incertidumbre filogenética.;antes;
+bogota-equipo10;Politomías;Faltante;;;después;
+bogota-equipo10;Ramas de longitud cero;Faltante;;;después;
+bogota-equipo10;Emparejamiento de nombres;No lo logramos;;;antes;
+bogota-equipo10;Modelo;Faltante;;;antes;
+bogota-equipo10;Error de medición;No incorporado;;;antes;
