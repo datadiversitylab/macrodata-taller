@@ -10,7 +10,7 @@ library(nlme)
 equipo <- "bogota-equipo08" # Tienes que modificar la ciudad y el numero
 salida <- file.path("equipos", equipo)
 
-datos <- read.csv("datos/birdbase/datos_real.csv", check.names = FALSE, stringsAsFactors = FALSE)
+datos <- read.csv("datos/birdbase/data.csv", check.names = FALSE, stringsAsFactors = FALSE)
 which(names(datos) == "Xmax")
 datos <- datos[,c(1:25)]
 
@@ -34,7 +34,17 @@ colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 # --- DECISION 1. Que columna de masa -----------------------------------------
 # EXPLICACIÓN DE LA DECISION
 
-rtnorm(datos, mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+datos$rtnorm_masa <- rtnorm(nrow(datos), mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+datos$rtnorm_masa2 <- rtnorm(nrow(datos), mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+datos$rtnorm_masa3 <- rtnorm(nrow(datos), mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+datos$rtnorm_masa4 <- rtnorm(nrow(datos), mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+datos$rtnorm_masa5 <- rtnorm(nrow(datos), mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+datos$rtnorm_masa6 <- rtnorm(nrow(datos), mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+datos$rtnorm_masa7 <- rtnorm(nrow(datos), mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+datos$rtnorm_masa8 <- rtnorm(nrow(datos), mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+datos$rtnorm_masa9 <- rtnorm(nrow(datos), mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+datos$rtnorm_masa10 <- rtnorm(nrow(datos), mean = 0, sd = 1, lower = datos$`Female MinMass`, upper = datos$`Female MaxMass`)
+
 length(datos$Species)
 masa <- colibries$"Average Mass"
 
