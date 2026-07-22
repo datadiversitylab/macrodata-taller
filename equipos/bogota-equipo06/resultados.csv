@@ -1,0 +1,2 @@
+"equipo","respuesta","predictor","estimado","error_estandar","ic_inferior","ic_superior","valor_p","n","modelo","arbol"
+"bogota-equipo06","log(masa corporal)","NormMax",0.0733303709665351,0.0187257093609885,0.036628655034033,0.110032086899037,0.000114673246878104,266,"CorPagel","McTavish 2025"
