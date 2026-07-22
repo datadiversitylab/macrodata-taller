@@ -1,0 +1,13 @@
+﻿equipo;decision;opcion;alternativas;justificacion;momento
+bogota-equipo01;Fuente de masa corporal;Promedio entre Male Min y Max Mass, Female Min y MaxMass;En donde no se puede calcular el promedio (NaN), se utiliza el Average Mass de la especie.;Se hace esto porque si ya se reconocen los datos como masa de machos o hembras se tiene un dimorfismo sexual que sehace visible en etapa adulta, por lo tanto no se agrega el ruido que pueden generar los datos sin sexar (unsexed) y el average mass de cada especie.;Previa a la corrida del codigo.
+bogota-equipo02;Transformación de la masa;Logaritmo natural;Sin transformar;Se realizó esto para poder normalizar la distribuciónde los datos.  ;Previo 
+bogota-equipo03;Resumen de la altitud;Promedio de NormMin y NormMax;NormMin sola;Se necesita obtener el dato la altitud promedio como dato concreto.;Previo 
+bogota-equipo04;Especies con límites codificados como letra;No se usó.;No se usó.;Descartarlas porque se tiene una altitud promedio.;Posterior
+bogota-equipo05;Especies con masa o altitud faltante;Eliminación por caso completo;Imputación por género;Por masa,ya se habia solucionado el problema en la primer desición, por lo tanto,la presente desición se tomó por la variable altitud en donde se presentaron unos NaN, que antes de la eliminación eran 366 especies y despues quedaron  359.;Previo 
+bogota-equipo06;Árbol filogenético;McTavish 2025;Distribución posterior de Jetz et al. 2012 vía rtrees;Unico arbol enraizado y dicotomico.;Posterior
+bogota-equipo07;Número de árboles;Uno solo;Muestra de 100 árboles de la posterior;El árbol de McTavish 2025 es un solo árbol de consenso. Reconocemos que esto ignora la incertidumbre filogenética.;Posterior
+bogota-equipo08;Politomías;McTavish 2025 sin modificar;No aplica;No presenta politomias;Posterior
+bogota-equipo09;Ramas de longitud cero;McTavish 2025 sin modificar;No aplica;No presenta ramas de longitud 0;Posterior
+bogota-equipo10;Emparejamiento de nombres;Coincidencia exacta tras cambiar espacios por guiones bajos;Sinonimia manual con la lista del IOC;Se tenian en los datos la mayor cantidad de especies concordantesen ambos arboles, es mas, los datos suplieron la covertura taxonomica de McTavish 2025.;Posterior
+bogota-equipo11;Modelo;PGLS con lambda de Pagel estimada;PGLS con movimiento browniano;Se trato de aplicar el modelo corMartins basado en Ornsted-Uhlembeck debido a que biologicamente hablando,los valores tienden a un valor optimo, sin embargo a nivel estadistico los datos filogeneticos  no se ajustaban a dicho modelo como el de Lambda con Pagel.;Posterior
+bogota-equipo12;Error de medición;No incorporado;;;antes

@@ -7,7 +7,7 @@ library(nlme)
 
 # Ciudades: bogota, barranquilla, pasto, quibdo
 
-equipo <- "mi-ciudad-equipoNN" # Tienes que modificar la ciudad y el numero
+equipo <- "bogota-equipo01" # Tienes que modificar la ciudad y el numero
 salida <- file.path("equipos", equipo)
 
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
@@ -16,19 +16,38 @@ colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 
 # --- DECISION 1. Que columna de masa -----------------------------------------
 # Average Mass, solo machos, solo hembras, punto medio de minimo y maximo
+masaspp <- c()
+for (i in 1:nrow(colibries)) {
+  masaspp[i] <- (mean(c(colibries$`Female MaxMass`[i], colibries$`Female MinMass`[i], colibries$`Male MinMass`[i], colibries$`Male MaxMass`[i]), na.rm = TRUE))
+}
 
-masa <- colibries$"Average Mass"
+##cbind
+
+colibries$masa <- masaspp
+sum(is.na(masaspp))
+
+colibries$masa[is.nan(colibries$masa)] <- colibries$`Average Mass`[is.nan(colibries$masa)]
 
 
 # --- DECISION 2. Transformar o no --------------------------------------------
 # Sin transformar, logaritmo, raiz cuadrada
 
-log_masa <- log(masa)
-
+log_masa <- log(colibries$masa)
+hist(colibries$masa)
+hist(log_masa)
 
 # --- DECISION 3. Como resumir la altitud -------------------------------------
 # NormMin, NormMax, punto medio del rango normal, punto medio de Xmin y Xmax
 
+colibries$NormMin <- as.numeric(colibries$NormMin)
+colibries$NormMax <- as.numeric(colibries$NormMax)
+
+altitud <- c()
+for (i in 1:nrow(colibries)) {
+    altitud[i] <- (mean(c(colibries$NormMin[i], colibries$NormMax[i]), na.rm = TRUE))
+  }
+colibries$alt <- altitud
+sum(is.na(altitud))
 
 # --- DECISION 4. Especies con L, F o M ---------------------------------------
 # Descartar, convertir al punto medio, imputar, tratar como categorica
@@ -55,6 +74,8 @@ tabla <- data.frame(
   stringsAsFactors = FALSE
 )
 
+class(tabla)
+tabla <- na.omit(tabla)
 
 # --- DECISION 5. Que arbol ---------------------------------------------------
 # McGuire et al. 2014, rtrees con Jetz et al. 2012, megatree de McTavish 2025
@@ -62,6 +83,10 @@ tabla <- data.frame(
 
 arbol <- read.tree("datos/arboles/McTavish.tre")
 
+McTavish <- read.tree("datos/arboles/McTavish.tre")
+McGuire <- read.tree("datos/arboles/McGuire.tre")
+Jhackett <- read.tree("datos/arboles/Jetz_hackett.tre")
+Jericson <- read.tree("datos/arboles/Jetz_ericson.tre")
 
 # --- DECISION 7. Como empatar los nombres ------------------------------------
 # Exacto, sinonimia manual con una lista taxonomica, busqueda difusa
@@ -112,15 +137,15 @@ intervalo <- confint(modelo)
 resultados <- data.frame(
   equipo = equipo,
   respuesta = "log(masa corporal)",
-  predictor = "DESCRIBE AQUI COMO RESUMISTE LA ALTITUD",
+  predictor = "Promedio NormMax y NormMin",
   estimado = coeficientes["altitud_km", "Value"],
   error_estandar = coeficientes["altitud_km", "Std.Error"],
   ic_inferior = intervalo["altitud_km", 1],
   ic_superior = intervalo["altitud_km", 2],
   valor_p = coeficientes["altitud_km", "p-value"],
   n = nrow(tabla),
-  modelo = "DESCRIBE AQUI EL MODELO QUE AJUSTASTE",
-  arbol = "DESCRIBE AQUI QUE ARBOL USASTE",
+  modelo = "Lambda de Pagel",
+  arbol = "Filogenia de McTavish et al. 2025",
   stringsAsFactors = FALSE
 )
 

@@ -69,7 +69,7 @@ if (mean(colibries$masa) > 5) {
 
 # Loops. Utiles, pero en R casi siempre hay algo mejor
 for (i in 1:nrow(colibries)) {
-  print(colibries$especie[i])
+  print(colibries$Species[i])
 }
 
 # Esto hace lo mismo sin loop
