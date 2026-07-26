@@ -57,33 +57,48 @@ if (escritura) {
 # 5. Git
 repositorio <- "https://github.com/datadiversitylab/macrodata-analisis.git"
 
-git <- tryCatch(system2("git", "--version", stdout = TRUE, stderr = TRUE), error = function(e) NULL)
+# Busca el ejecutable de Git de una forma que funciona igual en Windows, Mac y Linux
+git_bin <- Sys.which("git")
 
-if (is.null(git) || !any(grepl("git version", git))) {
-  problemas <- c(problemas, "Git no esta instalado, descargalo de https://git-scm.com/downloads")
+# Corre git y devuelve el codigo de salida real, no solo el texto
+correr_git <- function(args) {
+  salida <- suppressWarnings(system2(git_bin, args, stdout = TRUE, stderr = TRUE))
+  estado <- attr(salida, "status")
+  if (is.null(estado)) estado <- 0
+  list(estado = estado, salida = paste(salida, collapse = " "))
+}
+
+if (!nzchar(git_bin)) {
+  problemas <- c(problemas, "Git no esta instalado o no esta en el PATH, descargalo de https://git-scm.com/downloads y reinicia el computador")
 } else {
-  cat("Git:", git[1], "\n")
-
-  usuario <- system2("git", c("config", "--global", "user.name"), stdout = TRUE, stderr = FALSE)
-  correo <- system2("git", c("config", "--global", "user.email"), stdout = TRUE, stderr = FALSE)
-
-  if (length(usuario) == 0 || length(correo) == 0) {
-    problemas <- c(problemas, "Falta configurar Git, corre en la terminal: git config --global user.name \"Tu Nombre\" y git config --global user.email \"tu@correo.com\"")
+  
+  version_git <- correr_git("--version")
+  cat("Git:", trimws(version_git$salida), "\n")
+  
+  # git config devuelve codigo 1 y salida vacia cuando no esta configurado
+  nombre <- correr_git(c("config", "--global", "user.name"))
+  correo <- correr_git(c("config", "--global", "user.email"))
+  
+  tiene_nombre <- nombre$estado == 0 && nzchar(trimws(nombre$salida))
+  tiene_correo <- correo$estado == 0 && nzchar(trimws(correo$salida))
+  
+  if (!tiene_nombre || !tiene_correo) {
+    problemas <- c(problemas, "Falta configurar Git, corre en R: usethis::use_git_config(user.name = \"Tu nombre\", user.email = \"tu@correo.com\")")
   } else {
-    cat("Git configurado como:", usuario, "<", correo, ">\n")
+    cat("Git configurado como:", trimws(nombre$salida), "<", trimws(correo$salida), ">\n")
   }
-
-  # Prueba de clonado en una carpeta temporal
+  
+  # Prueba de clonado en una carpeta temporal. Pasamos la ruta sin comillas, system2 se encarga
   destino <- file.path(tempdir(), "prueba_clon")
-  unlink(destino, recursive = TRUE)
-  clon <- suppressWarnings(system2("git", c("clone", "--depth", "1", repositorio, shQuote(destino)),
-                                   stdout = TRUE, stderr = TRUE))
-
-  if (dir.exists(file.path(destino, ".git"))) {
+  unlink(destino, recursive = TRUE, force = TRUE)
+  
+  clon <- correr_git(c("clone", "--depth", "1", repositorio, destino))
+  
+  if (clon$estado == 0 && dir.exists(file.path(destino, ".git"))) {
     cat("Clonado del repositorio: correcto\n")
-    unlink(destino, recursive = TRUE)
+    unlink(destino, recursive = TRUE, force = TRUE)
   } else {
-    problemas <- c(problemas, "No se pudo clonar el repositorio del taller, revisa tu conexion o firewall")
+    problemas <- c(problemas, "No se pudo clonar el repositorio del taller, revisa tu conexion o tu firewall")
   }
 }
 
