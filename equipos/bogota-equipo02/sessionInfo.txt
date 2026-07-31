@@ -1,0 +1,35 @@
+R version 4.4.3 (2025-02-28 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 26200)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=Spanish_Colombia.utf8  LC_CTYPE=Spanish_Colombia.utf8   
+[3] LC_MONETARY=Spanish_Colombia.utf8 LC_NUMERIC=C                     
+[5] LC_TIME=Spanish_Colombia.utf8    
+
+time zone: America/Bogota
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] nlme_3.1-169 ape_5.8-1   
+
+loaded via a namespace (and not attached):
+ [1] geiger_2.0.11           doParallel_1.0.17       cli_3.6.5              
+ [4] rlang_1.1.4             generics_0.1.3          deSolve_1.40           
+ [7] clusterGeneration_1.3.8 subplex_1.9             scatterplot3d_0.3-44   
+[10] quadprog_1.5-8          grid_4.4.3              expm_1.0-0             
+[13] MASS_7.3-65             lifecycle_1.0.4         foreach_1.5.2          
+[16] mvtnorm_1.3-3           numDeriv_2016.8-1.1     compiler_4.4.3         
+[19] igraph_2.2.2            codetools_0.2-20        coda_0.19-4.1          
+[22] pkgconfig_2.0.3         fastmatch_1.1-8         Rcpp_1.0.14            
+[25] DEoptim_2.2-8           rstudioapi_0.17.1       optimParallel_1.0-2    
+[28] maps_3.4.3              phangorn_2.12.1         lattice_0.22-6         
+[31] digest_0.6.37           mnormt_2.1.2            parallel_4.4.3         
+[34] magrittr_2.0.3          Matrix_1.7-2            tools_4.4.3            
+[37] iterators_1.0.14        combinat_0.0-8          phytools_2.5-2         

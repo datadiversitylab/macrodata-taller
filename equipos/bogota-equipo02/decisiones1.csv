@@ -1,0 +1,13 @@
+equipo;decision;opcion;alternativas;justificacion;momento
+colevol-equipo0;Fuente de masa corporal;Average Mass;Male MinMass y Male MaxMass;Tiene una mejor representatividad de todos los datos, así no despreciaos datos de ninguno de los dos sexos. ;
+colevol-equipo0;Transformación de la masa;Logaritmo natural;Sin transformar;La distribución de los datos de masa está sesgada hacia la izquierda, entonces con un logaritomo natural los datos se ajustan a una distribución normal.  ;
+colevol-equipo0;Resumen de la altitud;Punto medio de NormMin y NormMax;NormMin sola;Elevanción del rango porque se tomaría el patron de districución de la especie y no los putos extremos ;
+colevol-equipo0;Especies con límites codificados como letra;Convertir L, F y M; F y M al punto medio del intervalo;Incluirlas porque al no ser tantas especies en esta categoría de letras, el resultado no se veria influenciado al convertirlas al punto medio del intervalo. ;
+colevol-equipo0;Especies con masa o altitud faltante;Eliminación por caso completo;Imputación por género;;
+colevol-equipo0;Árbol filogenético;McTavish.tre;Distribución posterior de Jetz et al. 2012 vía rtrees;Este árbol es la filogenia más reciente y en comparación con los anteriores resulve de mejor manera el árbol. ;
+colevol-equipo0;Número de árboles;Uno solo;Muestra de 100 árboles de la posterior;El árbol de McGuire es un solo árbol de consenso. Reconocemos que esto ignora la incertidumbre filogenética.;antes
+colevol-equipo0;Politomías;Dejarlas;Dejarlas;Se deja igual porque el árbol no tiene politomias ;
+colevol-equipo0;Ramas de longitud cero;Reemplazo por 1e-8;Colapsarlas;;
+colevol-equipo0;Emparejamiento de nombres;Coincidencia exacta tras cambiar espacios por guiones bajos;Sinonimia manual con la lista del IOC;Excluir nos nombres de las especies que no están en Birdbase;
+colevol-equipo0;Modelo;PGLS con lambda de Pagel estimada;PGLS con movimiento browniano;Nos quedamos con el de Pagel porque tiene un mejor AIC;
+colevol-equipo0;Error de medición;No incorporado;Usar la diferencia entre MinMass y MaxMass como varianza intraespecífica;BirdBase no reporta tamaños de muestra por especie, así que no podíamos convertir el rango en un error estándar defendible.;antes
