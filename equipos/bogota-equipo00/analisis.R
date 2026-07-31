@@ -5,7 +5,7 @@
 library(ape)
 library(nlme)
 
-equipo <- "colevol-equipo0"
+equipo <- "bogota-equipo00"
 salida <- file.path("equipos", equipo)
 
 # 1. Datos de rasgos ------------------------------------------------------

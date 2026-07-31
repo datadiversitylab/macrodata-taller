@@ -1,0 +1,2 @@
+"equipo","respuesta","predictor","estimado","error_estandar","ic_inferior","ic_superior","valor_p","n","modelo","arbol"
+"bogota-equipo01","log(masa corporal)","Promedio NormMax y NormMin",0.0816317660008407,0.0271318984400932,0.0284542222260595,0.134809309775622,0.00287918364059332,264,"Lambda de Pagel","Filogenia de McTavish et al. 2025"
