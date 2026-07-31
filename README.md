@@ -1,6 +1,6 @@
 # Colibríes, altitud y masa corporal: un estudio de múltiples analistas
 
-Este repositorio reúne el trabajo de los talleres de métodos comparativos filogenéticos y ciencia de datos en `MacroData`. Todos los equipos responden la misma pregunta con los mismos datos, pero cada uno decide cómo analizarlos. Lo que nos interesa medir no es la respuesta de un equipo en particular, sino cuánto se mueve la conclusión según las decisiones analíticas que cada quien tomó por su cuenta.
+Este repositorio reúne el trabajo de los talleres de métodos comparativos filogenéticos y ciencia de datos en `MacroData`. Todos los equipos van a procurar responder la misma pregunta con los mismos datos, pero cada uno decide cómo analizarlos. Lo que nos interesa medir no es la respuesta de un equipo en particular, sino cuánto se mueve la conclusión según las decisiones analíticas que cada quien tomó por su cuenta. La estructura seguirá a [Gould et al. (2025)](https://egouldo.github.io/ManyAnalysts/).
 
 ## La pregunta
 
@@ -8,21 +8,20 @@ Este repositorio reúne el trabajo de los talleres de métodos comparativos filo
 
 ## Los datos
 
-**Rasgos.** BIRDBASE (Scientific Data, 2025): https://springernature.figshare.com/articles/dataset/BIRDBASE_A_Global_Database_of_Avian_Biogeography_Conservation_Ecology_and_Life_History_Traits/27051040?file=55634729
+**Rasgos.** BIRDBASE: [publicacion](https://www.nature.com/articles/s41597-025-05615-3) y [datos](https://springernature.figshare.com/articles/dataset/BIRDBASE_A_Global_Database_of_Avian_Biogeography_Conservation_Ecology_and_Life_History_Traits/27051040?file=55634729).
 
 De ahí usamos dos bloques de columnas.
 
-Masa corporal, en gramos: `Male MinMass`, `Male MaxMass`, `Female MinMass`, `Female MaxMass`, `Unsexed MinMass`, `Unsexed MaxMass` y `Average Mass`. La última es el promedio entre machos, hembras e individuos sin sexar.
-
-Altitud, en metros sobre el nivel del mar: `Xmin` (altitud más baja registrada), `NormMin` (límite bajo normal), `NormMax` (límite alto normal), `Xmax` (altitud más alta registrada) y `Elevational Range` (diferencia entre `NormMax` y `NormMin`).
+- Masa corporal, en gramos: `Male MinMass`, `Male MaxMass`, `Female MinMass`, `Female MaxMass`, `Unsexed MinMass`, `Unsexed MaxMass` y `Average Mass`. La última es el promedio entre machos, hembras e individuos sin sexar.
+- Altitud, en metros sobre el nivel del mar: `Xmin` (altitud más baja registrada), `NormMin` (límite bajo normal), `NormMax` (límite alto normal), `Xmax` (altitud más alta registrada) y `Elevational Range` (diferencia entre `NormMax` y `NormMin`).
 
 Cuidado con las columnas de altitud. Para algunas especies el límite no es un número sino una letra: `L` para tierras bajas (0 a 500 m), `F` para piedemonte (501 a 1000 m) y `M` para montano (más de 1000 m). Cuando un límite es número y el otro es letra, `Elevational Range` queda como `NA`. Estas especies no se pueden ignorar en silencio. Lo que cada equipo haga con ellas es una de las decisiones que vamos a registrar.
 
 **Árboles.** Hay tres fuentes disponibles y cada equipo escoge una, o varias:
 
-- `rtrees` en R, que da acceso a la distribución posterior de Jetz et al. (2012). Ojo con las especies sin secuencia en su nombre fueron imputadas con taxonómia.
-- Megatree de McTavish et al. (2025), construido sobre el Open Tree of Life.
-- El árbol de McGuire et al. (2014), específico para colibríes: https://github.com/bw4sz/FutureAnalog/blob/53b12a2bd0c4befabd7b2106a0044cf116871f23/InputData/hum294.tre
+- `rtrees` en R, que da acceso a la distribución posterior de [Jetz et al. (2012)](https://www.nature.com/articles/nature11631). Hay que tener cuidado con las especies sin secuencia en su nombre fueron imputadas con taxonómia.
+- Megatree de [McTavish et al. (2025)](https://www.pnas.org/doi/10.1073/pnas.2409658122), construido sobre el Open Tree of Life.
+- El árbol de [McGuire et al. (2014)](https://github.com/bw4sz/FutureAnalog/blob/53b12a2bd0c4befabd7b2106a0044cf116871f23/InputData/hum294.tre), específico para colibríes.
 
 Los tres usan taxonomías distintas y ninguno coincide exactamente con la de BIRDBASE. Emparejar los nombres es parte del trabajo, no un paso previo al trabajo.
 
