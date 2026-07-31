@@ -1,0 +1,14 @@
+Decisiones
+equipo;decision;opcion;alternativas;justificacion;momento
+colevol-equipo3;Fuente de masa corporal;Average Mass;Unsexed MinMass y Unsexed MaxMass;Decidimos escoger el promedio de las masas porque no diferencia los sexos, lo cual no es relevante para responder la pregunta. ;Antes
+colevol-equipo0;Transformación de la masa;Logaritmo natural;Sin transformar;Los artículos de aves lo utilizan con frecuencia para homogenizar los datos en analisis y alometricos;Antes
+colevol-equipo0;Resumen de la altitud;Punto medio de NormMin y NormMax;Rango de elevación;Respresenta la aproximación de la elevación central del rango altitudinal, permitiendo resumir en un unico valor la información disponible sobre la distribución de elevación;antes
+colevol-equipo0;Especies con límites codificados como letra;Convertir L y F;Convertir las alturas a caracteres;Nos permite tener una representación más exacta ;antes
+colevol-equipo0;Especies con masa o altitud faltante;Eliminación por caso completo;Imputación por género;Para evitar sesgos ;antes
+colevol-equipo0;Árbol filogenético;McTavish et al. 2025;McGuire et al. 2014;La taxonomia de aves cambia constantemente, por lo tanto sería más util un arbol actualizado. ;antes
+colevol-equipo0;Número de árboles;Uno solo;Varios árboles;Porque nuestro árbol solo tenia un aárbol consenso ;antes
+colevol-equipo0;Politomías;Resolución al azar con multi2di;Dejarlas;No se presentaron politomias;antes
+colevol-equipo0;Ramas de longitud cero;Reemplazo por 1e-8;Colapsarlas;No se presentaron;antes
+colevol-equipo0;Emparejamiento de nombres;Coincidencia exacta tras cambiar espacios por guiones bajos;Sinonimia manual con la lista del IOC;Para poder realizar la comparación;antes
+colevol-equipo0;Modelo;PGLS con lambda de Pagel estimada;PGLS con movimiento browniano;Valor más bajo de AIC;antes
+colevol-equipo0;Error de medición;;;;

@@ -1,0 +1,2 @@
+"equipo","respuesta","predictor","estimado","error_estandar","ic_inferior","ic_superior","valor_p","n","modelo","arbol"
+"bogota-equipo03","log(masa corporal)","DESCRIBE AQUI COMO RESUMISTE LA ALTITUD",0.0867567048862006,0.026494395023036,0.0348286448488728,0.138684764923528,0.00119976985514629,266,"DESCRIBE AQUI EL MODELO QUE AJUSTASTE","DESCRIBE AQUI QUE ARBOL USASTE"
