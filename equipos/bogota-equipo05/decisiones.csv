@@ -1,0 +1,13 @@
+﻿equipo;decision;opcion;alternativas;justificacion;momento
+colevol-equipo5;Fuente de masa corporal;Average Mass;transformada ;se escogio por que proporciona valores unicos representativos de la masa corporal para cada especie.;antes
+colevol-equipo5;Transformación de la masa;Logaritmo natural;transformada ;se transformo el promedio de la masa teniendo en cuenta que los datos presentaban un sesgoo a la derecha ;despues 
+colevol-equipo5;Resumen de la altitud;Punto medio de NormMin y NormMax se utilizo en metros ;Sin transformar;se dejo la igual por que son variables iguales y las que más datos proporcionan;despues 
+colevol-equipo5;Especies con límites codificados como letra;Convertir L  F y M punto medio del intervalo ;Sin transformar;se dejo igual por que es la conservadora teniendo en cuenta la falta de informacón;antes
+colevol-equipo5;Especies con masa o altitud faltante;Eliminación por caso completo;Sin transformar; se dejo igual ya que una imputacion de cualquier tipo no puede cambiar con respecto a sus congeneres;antes
+colevol-equipo5;Árbol filogenético;McTavish 2025 ;transformada ;se escogio el arbol McTavish 2025 por ser el mas reciente y robusto de todos;antes
+colevol-equipo5;Número de árboles;Uno solo;N/A;N/A;antes
+colevol-equipo5;Politomías;N/A;N/A;nuestro arbol no tiene politomias ni ramas de longitud cero ;antes
+colevol-equipo5;Ramas de longitud cero;N/A;N/A;nuestro arbol no tiene politomias ni ramas de longitud cero ;antes
+colevol-equipo5;Emparejamiento de nombres;Coincidencia exacta tras cambiar espacios por guiones bajos;sin transformar;es la solucion mas rapida y que manipula menos los datos obtenidos ;antes
+colevol-equipo5;Modelo;PGLS con lambda de Pagel estimada;;se escogio ya que presenta el mayor ajuste lo que significa que hay señal filogenetica ;despues 
+colevol-equipo5;Error de medición;No incorporado;;;

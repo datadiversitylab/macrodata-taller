@@ -1,0 +1,2 @@
+"equipo","respuesta","predictor","estimado","error_estandar","ic_inferior","ic_superior","valor_p","n","modelo","arbol"
+"bogota-equipo05","log(masa corporal promedio)","Punto medio de altura registrada normal, en metros",8.67567048885728e-05,2.64943950233595e-05,3.4828644850611e-05,0.000138684764926535,0.00119976985494415,266,"Utilizamos el modelo de pagel por tener el mejor ajuste, lo que indica señal filogenetica","Arbol de McTavish al ser el mas robusto"
