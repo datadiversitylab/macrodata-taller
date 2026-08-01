@@ -2,6 +2,9 @@
 # Copia este archivo a equipos/tu-ciudad-tu-equipo/analisis.R y trabaja alli
 # Cada DECISION es una fila de decisiones.csv. Escribela cuando la tomes
 
+# Nombre 1: [Nombre integrante 1]
+# Nombre 2: [Nombre integrante 2]
+
 library(ape)
 library(nlme)
 
@@ -135,9 +138,13 @@ dev.off()
 writeLines(capture.output(sessionInfo()), file.path(salida, "sessionInfo.txt"))
 
 # Guarda este archivo como analisis.R tu carpeta de trabajo. Este es el path
-file.path(salida, "analisis.r")
+file.path(salida, "analisis.R")
 
 # Ahora copiamos el template de decisiones.csv a tu capeta. No olvides llenarlo
 file.path(salida, "decisiones.csv")
+
+# Copia a tu path y modifica el README.md
+file.path(salida, "README.md")
+file.path("equipos/bogota-equipo00/README.md")
 
 
