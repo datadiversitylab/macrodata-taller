@@ -1,0 +1,13 @@
+equipo;decision;opcion;alternativas;justificacion;momento
+barranquilla-equipo02;Fuente de masa corporal;Average Mass;Male MinMass y Male MaxMass;Representa en un único valor todas las muestras.;Antes
+barranquilla-equipo02;Transformación de la masa;Logaritmo natural;Sin transformar y Raíz cuadrada;Hay una mejor distribución normal de los datos.;Antes
+barranquilla-equipo02;Resumen de la altitud;Punto medio de NormMin y NormMax;NormMin sola;"Mayor representatividad; no utilizamos Punto medio de NormMin y NormMax para no generar datos atípicos.";Antes
+barranquilla-equipo02;Especies con límites codificados como letra;N/A;N/A;No hay datos codificados xomo letra ;Después
+barranquilla-equipo02;Especies con masa o altitud faltante;Eliminación por caso completo;Imputación por género;Datos innecesarios.;Antes
+barranquilla-equipo02;Árbol filogenético;McTavish et al., 2025;McGuire et al. 2014 &  Jetz et al., 2012;Fuente de información más actual.;Después
+barranquilla-equipo02;Número de árboles;Uno de los tres;Muestra de 100 árboles de la posterior;El árbol de McGuire es un solo árbol de consenso. Utiliza únicamente datos de Trochilidaes y excluye demás grupos de aves.;Después
+barranquilla-equipo02;Politomías;Resolución al azar con multi2di;Dejarlas;Prevenir politómias.;Antes
+barranquilla-equipo02;Ramas de longitud cero;Reemplazo por 1e-8;Colapsarlas;No hay ramas con logitud cero. Prevenir en caso de que sí.;Antes
+barranquilla-equipo02;Emparejamiento de nombres;Coincidencia exacta tras cambiar espacios por guiones bajos;Sinonimia manual con la lista del IOC;Estandarización de datos.;Antes
+barranquilla-equipo02;Modelo;PGLS con movimiento browniano;PGLS con lambda de Pagel estimada;Es el más sencillo y aplicable para nuestros datos.;Antes
+barranquilla-equipo02;Error de medición;No incorporado;Usar la diferencia entre MinMass y MaxMass como varianza intraespecífica;No incorporado.;Después

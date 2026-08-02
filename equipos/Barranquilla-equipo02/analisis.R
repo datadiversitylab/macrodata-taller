@@ -2,15 +2,15 @@
 # Copia este archivo a equipos/tu-ciudad-tu-equipo/analisis.R y trabaja alli
 # Cada DECISION es una fila de decisiones.csv. Escribela cuando la tomes
 
-# Nombre 1: [Nombre integrante 1]
-# Nombre 2: [Nombre integrante 2]
+# Nombre 1: Angelly Sofía Ramos Villalba
+# Nombre 2: Cristian David Clavijo Neira
 
 library(ape)
 library(nlme)
 
-# Ciudades: bogota, barranquilla, pasto, quibdo
+# Ciudaded: barranquilla
 
-equipo <- "mi-ciudad-equipoNN" # Tienes que modificar la ciudad y el numero
+equipo <- "barranquilla-equipo02" # Tienes que modificar la ciudad y el numero
 salida <- file.path("equipos", equipo)
 
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
