@@ -2,15 +2,15 @@
 # Copia este archivo a equipos/tu-ciudad-tu-equipo/analisis.R y trabaja alli
 # Cada DECISION es una fila de decisiones.csv. Escribela cuando la tomes
 
-# Nombre 1: [Nombre integrante 1]
-# Nombre 2: [Nombre integrante 2]
+# Nombre 1: [Carlos Donascimiento]
+# Nombre 2: [Ana Correa]
 
 library(ape)
 library(nlme)
 
 # Ciudades: bogota, barranquilla, pasto, quibdo
 
-equipo <- "mi-ciudad-equipoNN" # Tienes que modificar la ciudad y el numero
+equipo <- "barranquilla_equipo01" # Tienes que modificar la ciudad y el numero
 salida <- file.path("equipos", equipo)
 
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
@@ -20,7 +20,7 @@ colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 # --- DECISION 1. Que columna de masa -----------------------------------------
 # Average Mass, solo machos, solo hembras, punto medio de minimo y maximo
 
-masa <- colibries$"Average Mass"
+masa <- rowMeans(colibries[,c(14:17)] ,na.rm = TRUE)
 
 
 # --- DECISION 2. Transformar o no --------------------------------------------
@@ -32,22 +32,14 @@ log_masa <- log(masa)
 # --- DECISION 3. Como resumir la altitud -------------------------------------
 # NormMin, NormMax, punto medio del rango normal, punto medio de Xmin y Xmax
 
+altitud <- colibries$"NormMax"
+any(is.na(datos$NormMax))
+datos$NormMax == c("L, F, M")
+all(!is.na(as.numeric(datos$NormMax)))
+class(datos$NormMax)
+datos$NormMax <- as.numeric(datos$NormMax)
 
-# --- DECISION 4. Especies con L, F o M ---------------------------------------
-# Descartar, convertir al punto medio, imputar, tratar como categorica
 
-convertir_altitud <- function(x) {
-  x <- trimws(as.character(x))
-  equivalencias <- c(L = 250, F = 750, M = 1500)
-  numerico <- suppressWarnings(as.numeric(x))
-  letra <- x %in% names(equivalencias)
-  numerico[letra] <- equivalencias[x[letra]]
-  numerico
-}
-
-norm_min <- convertir_altitud(colibries$"NormMin")
-norm_max <- convertir_altitud(colibries$"NormMax")
-altitud <- (norm_min + norm_max) / 2
 
 colibries$"Scientific Name" <- colibries$`Latin (BirdLife > IOC > Clements>AviList)`
 
@@ -58,12 +50,24 @@ tabla <- data.frame(
   stringsAsFactors = FALSE
 )
 
-
 # --- DECISION 5. Que arbol ---------------------------------------------------
 # McGuire et al. 2014, rtrees con Jetz et al. 2012, megatree de McTavish 2025
 # Y si usas uno solo o una muestra de la posterior
 
-arbol <- read.tree("datos/arboles/McTavish.tre")
+arbol <- read.tree("datos/arboles/McGuire.tre")
+arbolspp_org <- arbol$tip.label
+especies <- sub(".","_", arbol$tip.label, fixed = TRUE)
+especies2 <- sapply(seq_along(especies), function(x){
+  strsplit(especies[x], ".", fixed = TRUE)[[1]][1]
+})
+to_remove <- arbolspp_org[duplicated(especies2)]
+arbol2 <- drop.tip(arbol, to_remove)
+especiesn <- sub(".","_", arbol2$tip.label, fixed = TRUE)
+especies2n <- sapply(seq_along(especiesn), function(x){
+  strsplit(especiesn[x], ".", fixed = TRUE)[[1]][1]
+})
+arbol2$tip.label <- especies2n
+arbol <- arbol2
 
 
 # --- DECISION 7. Como empatar los nombres ------------------------------------
@@ -74,7 +78,7 @@ en_ambos <- intersect(arbol$tip.label, tabla$especie_arbol)
 
 no_empataron <- setdiff(tabla$especie_arbol, arbol$tip.label)
 write.csv(data.frame(especie = no_empataron), file.path(salida, "nombres_sin_empatar.csv"), row.names = FALSE)
-
+unique(tabla$especie)
 
 # --- DECISION 8. Que especies excluir ----------------------------------------
 # Casos completos, imputacion por genero, imputacion filogenetica
@@ -85,6 +89,7 @@ tabla <- tabla[tabla$especie_arbol %in% en_ambos, ]
 arbol <- drop.tip(arbol, setdiff(arbol$tip.label, tabla$especie_arbol))
 rownames(tabla) <- tabla$especie_arbol
 tabla <- tabla[arbol$tip.label, ]
+
 
 # Sin este TRUE nada de lo que sigue sirve
 all(rownames(tabla) == arbol$tip.label)
