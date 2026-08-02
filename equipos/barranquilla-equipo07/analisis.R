@@ -2,15 +2,15 @@
 # Copia este archivo a equipos/tu-ciudad-tu-equipo/analisis.R y trabaja alli
 # Cada DECISION es una fila de decisiones.csv. Escribela cuando la tomes
 
-# Nombre 1: [Nombre integrante 1]
-# Nombre 2: [Nombre integrante 2]
+# Nombre 1: [Jair David Barrera Liñán]
+# Nombre 2: [Juan Diego Silva]
 
 library(ape)
 library(nlme)
 
 # Ciudades: bogota, barranquilla, pasto, quibdo
 
-equipo <- "mi-ciudad-equipoNN" # Tienes que modificar la ciudad y el numero
+equipo <- "barranquilla-equipo07" # Tienes que modificar la ciudad y el numero
 salida <- file.path("equipos", equipo)
 
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
@@ -26,12 +26,14 @@ masa <- colibries$"Average Mass"
 # --- DECISION 2. Transformar o no --------------------------------------------
 # Sin transformar, logaritmo, raiz cuadrada
 
-log_masa <- log(masa)
+log10_masa <- log10(masa)
 
 
 # --- DECISION 3. Como resumir la altitud -------------------------------------
 # NormMin, NormMax, punto medio del rango normal, punto medio de Xmin y Xmax
 
+
+# promedio entre nornMin y normMax
 
 # --- DECISION 4. Especies con L, F o M ---------------------------------------
 # Descartar, convertir al punto medio, imputar, tratar como categorica
@@ -48,13 +50,14 @@ convertir_altitud <- function(x) {
 norm_min <- convertir_altitud(colibries$"NormMin")
 norm_max <- convertir_altitud(colibries$"NormMax")
 altitud <- (norm_min + norm_max) / 2
+sqrtaltitud <- sqrt(altitud)
 
 colibries$"Scientific Name" <- colibries$`Latin (BirdLife > IOC > Clements>AviList)`
 
 tabla <- data.frame(
   especie = colibries$`Scientific Name`,
-  log_masa = log_masa,
-  altitud_km = altitud / 1000,
+  log10_masa = log10_masa,
+  altitud_sqrt = sqrtaltitud,
   stringsAsFactors = FALSE
 )
 
@@ -63,28 +66,45 @@ tabla <- data.frame(
 # McGuire et al. 2014, rtrees con Jetz et al. 2012, megatree de McTavish 2025
 # Y si usas uno solo o una muestra de la posterior
 
-arbol <- read.tree("datos/arboles/McTavish.tre")
+arbol <- read.tree("datos/arboles/McGuire.tre")
 
 
 # --- DECISION 7. Como empatar los nombres ------------------------------------
 # Exacto, sinonimia manual con una lista taxonomica, busqueda difusa
 
-tabla$especie_arbol <- gsub(" ", "_", tabla$especie)
+arbol <- read.tree("datos/arboles/McGuire.tre")
+arbolspp_org <- arbol$tip.label
+especies <- sub(".","_", arbol$tip.label, fixed = TRUE)
+especies2 <- sapply(seq_along(especies), function(x){
+  strsplit(especies[x], ".", fixed = TRUE)[[1]][1]
+})
+to_remove <- arbolspp_org[duplicated(especies2)]
+arbol2 <- drop.tip(arbol, to_remove)
+especiesn <- sub(".","_", arbol2$tip.label, fixed = TRUE)
+especies2n <- sapply(seq_along(especiesn), function(x){
+  strsplit(especiesn[x], ".", fixed = TRUE)[[1]][1]
+})
+arbol2$tip.label <- especies2n
+arbol <- arbol2
+
 en_ambos <- intersect(arbol$tip.label, tabla$especie_arbol)
 
-no_empataron <- setdiff(tabla$especie_arbol, arbol$tip.label)
+no_empataron <- setdiff(tabla$especie, arbol$tip.label)
 write.csv(data.frame(especie = no_empataron), file.path(salida, "nombres_sin_empatar.csv"), row.names = FALSE)
 
 
 # --- DECISION 8. Que especies excluir ----------------------------------------
 # Casos completos, imputacion por genero, imputacion filogenetica
 
-tabla <- tabla[!is.na(tabla$log_masa) & !is.na(tabla$altitud_km), ]
-tabla <- tabla[tabla$especie_arbol %in% en_ambos, ]
+tabla <- tabla[!is.na(tabla$log10_masa) & !is.na(tabla$altitud_sqrt), ]
+#tabla <- tabla[tabla$especie %in% en_ambos, ]
 
-arbol <- drop.tip(arbol, setdiff(arbol$tip.label, tabla$especie_arbol))
-rownames(tabla) <- tabla$especie_arbol
+
+
+arbol <- drop.tip(arbol, setdiff(arbol$tip.label, tabla$especie))
+rownames(tabla) <- tabla$especie
 tabla <- tabla[arbol$tip.label, ]
+
 
 # Sin este TRUE nada de lo que sigue sirve
 all(rownames(tabla) == arbol$tip.label)
@@ -101,7 +121,7 @@ arbol$edge.length[arbol$edge.length == 0] <- 1e-8
 # corBrownian, corPagel, corMartins, modelo mixto. Y si incluyes error de medicion
 
 modelo <- gls(log_masa ~ altitud_km,
-              correlation = corPagel(1, phy = arbol, form = ~especie_arbol),
+              correlation = corPagel(1, phy = arbol, form = ~especie),
               data = tabla, method = "ML")
 
 summary(modelo)
