@@ -1,129 +1,146 @@
-# Equipo 0. Ejemplo de referencia para los talleres
-# Pregunta: la altitud predice la masa corporal en Trochilidae
-# Correr desde la raiz del repositorio con una sesion limpia de R
+# Dia 2, bloque 3. Tu proyecto
+# Copia este archivo a equipos/tu-ciudad-tu-equipo/analisis.R y trabaja alli
+# Cada DECISION es una fila de decisiones.csv. Escribela cuando la tomes
+
+# Nombre 1: [Flor Celeste Guevara Muñoz]
+# Nombre 2: [Brayan Andrés Botache Cerón]
 
 library(ape)
 library(nlme)
+# Ciudades: bogota, barranquilla, pasto, quibdo
 
-equipo <- "bogota-equipo00"
+equipo <- "barranquilla-equipo03-v2" # Tienes que modificar la ciudad y el numero
 salida <- file.path("equipos", equipo)
 
-# 1. Datos de rasgos ------------------------------------------------------
+datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
+colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 
-colibries <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
 
-# Renombramos las columnas que vamos a usar para no arrastrar espacios
-colibries <- data.frame(
-  especie = colibries$`AviList v1 2025`,
-  masa = colibries$"Average Mass",
-  norm_min = colibries$"NormMin",
-  norm_max = colibries$"NormMax",
+# --- DECISION 1. Que columna de masa -----------------------------------------
+# Average Mass, solo machos, solo hembras, punto medio de minimo y maximo
+
+masa <- colibries$"Average Mass"
+
+
+# --- DECISION 2. Transformar o no --------------------------------------------
+# Sin transformar, logaritmo, raiz cuadrada
+
+log_masa <- log(masa)
+
+
+# --- DECISION 3. Como resumir la altitud -------------------------------------
+# NormMin, NormMax, punto medio del rango normal, punto medio de Xmin y Xmax
+
+ 
+# --- DECISION 4. Especies con L, F o M ---------------------------------------
+# Descartar, convertir al punto medio, imputar, tratar como categorica
+
+
+norm_min <- as.numeric(colibries$"NormMin")
+norm_max <- as.numeric(colibries$"NormMax")
+altitud <- (norm_min + norm_max) / 2
+
+colibries$"Scientific Name" <- colibries$`Latin (BirdLife > IOC > Clements>AviList)`
+View(tabla)
+tabla <- data.frame(
+  especie = colibries$`Scientific Name`,
+  log_masa = log_masa,
+  altitud_km = altitud / 1000,
   stringsAsFactors = FALSE
 )
 
-# 2. Altitud --------------------------------------------------------------
 
-# BirdBase codifica algunos limites como letras en lugar de numeros
-# L es tierras bajas, F es piedemonte, M es montano
-# Decidimos convertirlas al punto medio de cada intervalo en vez de descartarlas
-convertir_altitud <- function(x) {
-  x <- trimws(as.character(x))
-  equivalencias <- c(L = 250, F = 750, M = 1500)
-  numerico <- suppressWarnings(as.numeric(x))
-  letra <- x %in% names(equivalencias)
-  numerico[letra] <- equivalencias[x[letra]]
-  numerico
-}
+# --- DECISION 5. Que arbol ---------------------------------------------------
+# McGuire et al. 2014, rtrees con Jetz et al. 2012, megatree de McTavish 2025
+# Y si usas uno solo o una muestra de la posterior
 
-colibries$norm_min <- convertir_altitud(colibries$norm_min)
-colibries$norm_max <- convertir_altitud(colibries$norm_max)
+arbol <- read.tree("datos/arboles/McGuire.tre")
+especies <- sub(".","_", arbol$tip.label, fixed = TRUE)
+especies2 <- sapply(seq_along(especies), function(x){
+  strsplit(especies[x], ".", fixed = TRUE)[[1]][1]
+})
+arbol$tip.label <- especies2
 
-# Resumimos la altitud como el punto medio del rango normal
-colibries$altitud <- (colibries$norm_min + colibries$norm_max) / 2
 
-# 3. Limpieza -------------------------------------------------------------
+# --- DECISION 7. Como empatar los nombres ------------------------------------
+# Exacto, sinonimia manual con una lista taxonomica, busqueda difusa
 
-completos <- !is.na(colibries$masa) & !is.na(colibries$altitud)
-colibries <- colibries[completos, ]
+tabla$especie_arbol <- gsub(" ", "_", tabla$especie)
+en_ambos <- intersect(arbol$tip.label, tabla$especie_arbol)
 
-# Log de la masa porque la distribucion es fuertemente sesgada
-colibries$log_masa <- log(colibries$masa)
-
-# Altitud en kilometros para que el coeficiente sea legible
-colibries$altitud_km <- colibries$altitud / 1000
-
-cat("Especies con datos completos:", nrow(colibries), "\n")
-
-# 4. Arbol ----------------------------------------------------------------
-
-# Usamos el arbol de Jetz et al. 2012, especifico para colibries
-arbol <- read.tree("datos/arboles/Jetz_ericson.tre")[[1]]
-
-# Los nombres del arbol usan guion bajo, los de BirdBase usan espacio
-colibries$especie_arbol <- gsub(" ", "_", colibries$especie)
-
-en_ambos <- intersect(arbol$tip.label, colibries$especie_arbol)
-cat("Especies en el arbol y en la matriz:", length(en_ambos), "\n")
-
-# Guardamos los nombres que no empataron para revisarlos a mano
-no_empataron <- setdiff(colibries$especie_arbol, arbol$tip.label)
+no_empataron <- setdiff(tabla$especie_arbol, arbol$tip.label)
 write.csv(data.frame(especie = no_empataron), file.path(salida, "nombres_sin_empatar.csv"), row.names = FALSE)
 
-arbol <- drop.tip(arbol, setdiff(arbol$tip.label, en_ambos))
-colibries <- colibries[colibries$especie_arbol %in% en_ambos, ]
-rownames(colibries) <- colibries$especie_arbol
-colibries <- colibries[arbol$tip.label, ]
 
-# Resolvemos politomias al azar y damos longitud minima a las ramas de cero
+# --- DECISION 8. Que especies excluir ----------------------------------------
+# Casos completos, imputacion por genero, imputacion filogenetica
+
+tabla <- tabla[!is.na(tabla$log_masa) & !is.na(tabla$altitud_km), ]
+tabla <- tabla[tabla$especie_arbol %in% en_ambos, ]
+
+arbol <- drop.tip(arbol, setdiff(arbol$tip.label, tabla$especie_arbol))
+rownames(tabla) <- tabla$especie_arbol
+tabla <- tabla[arbol$tip.label, ]
+
+# Sin este TRUE nada de lo que sigue sirve
+all(rownames(tabla) == arbol$tip.label)
+
+
+# --- DECISION 6. Politomias y ramas de longitud cero -------------------------
+# Resolver al azar, colapsar, dejarlas, reemplazar los ceros
+
 if (!is.binary(arbol)) arbol <- multi2di(arbol)
 arbol$edge.length[arbol$edge.length == 0] <- 1e-8
 
-# 5. Modelo ---------------------------------------------------------------
 
-# PGLS con lambda de Pagel estimada por maxima verosimilitud
-modelo <- gls(
-  log_masa ~ altitud_km,
-  correlation = corPagel(1, phy = arbol, form = ~especie_arbol),
-  data = colibries,
-  method = "ML"
-)
+# --- DECISION 9. Que modelo --------------------------------------------------
+# corBrownian, corPagel, corMartins, modelo mixto. Y si incluyes error de medicion
 
-resumen <- summary(modelo)
-coeficientes <- resumen$tTable
+modelo <- gls(log_masa ~ altitud_km,
+              correlation = corPagel(1, phy = arbol, form = ~especie_arbol),
+              data = tabla, method = "ML")
+
+summary(modelo)
+
+
+# --- Guardar -----------------------------------------------------------------
+
+coeficientes <- summary(modelo)$tTable
 intervalo <- confint(modelo)
-
-print(resumen)
-
-# 6. Resultados -----------------------------------------------------------
 
 resultados <- data.frame(
   equipo = equipo,
   respuesta = "log(masa corporal)",
-  predictor = "altitud, punto medio del rango normal, en km",
+  predictor = "DESCRIBE AQUI COMO RESUMISTE LA ALTITUD",
   estimado = coeficientes["altitud_km", "Value"],
   error_estandar = coeficientes["altitud_km", "Std.Error"],
   ic_inferior = intervalo["altitud_km", 1],
   ic_superior = intervalo["altitud_km", 2],
   valor_p = coeficientes["altitud_km", "p-value"],
-  n = nrow(colibries),
-  modelo = "PGLS, lambda de Pagel estimada",
-  lambda = as.numeric(coef(modelo$modelStruct$corStruct, unconstrained = FALSE)),
-  arbol = "McGuire et al. 2014",
+  n = nrow(tabla),
+  modelo = "DESCRIBE AQUI EL MODELO QUE AJUSTASTE",
+  arbol = "DESCRIBE AQUI QUE ARBOL USASTE",
   stringsAsFactors = FALSE
 )
 
 write.csv(resultados, file.path(salida, "resultados.csv"), row.names = FALSE)
 
-# 7. Figura ---------------------------------------------------------------
-
 png(file.path(salida, "figura.png"), width = 1400, height = 1200, res = 200)
-plot(colibries$altitud_km, colibries$log_masa,
-     pch = 16, col = rgb(0, 0, 0, 0.5),
-     xlab = "Altitud (km)", ylab = "log masa (g)",
-     main = "Trochilidae, equipo 0")
+plot(tabla$altitud_km, tabla$log_masa, pch = 16, col = rgb(0, 0, 0, 0.5),
+     xlab = "Altitud (km)", ylab = "log masa (g)", main = equipo)
 abline(coef(modelo), lwd = 2)
 dev.off()
 
-# 8. Sesion ---------------------------------------------------------------
-
 writeLines(capture.output(sessionInfo()), file.path(salida, "sessionInfo.txt"))
+
+# Guarda este archivo como analisis.R tu carpeta de trabajo. Este es el path
+file.path(salida, "analisis.R")
+
+# Ahora copiamos el template de decisiones.csv a tu capeta. No olvides llenarlo
+file.path(salida, "decisiones.csv")
+
+# Copia a tu path y modifica el README.md
+file.path(salida, "README.md")
+file.path("equipos/bogota-equipo00/README.md")
+
+
