@@ -1,0 +1,10 @@
+equipo,decision,opcion,alternativas,justificacion,momento
+barranquilla-equipo08,Fuente de masa corporal,Average Mass,Male MinMass y Male MaxMass; promedio de machos y hembras por separado; punto medio de Unsexed MinMass y Unsexed MaxMass,Integra machos y hembas. La familia Trochilidae no presenta grandes diferencias de dimorfismo sexual en el caracter tamaño.,antes
+barranquilla-equipo07,Transformación de la masa,Logaritmo natural,Sin transformar; raíz cuadrada,Mejor visualización de la distribución de los datos en el histograma de logaritmo.,después
+barranquilla-equipo06,Resumen de la altitud,Punto medio de NormMin y NormMax,NormMin sola; NormMax sola; punto medio de Xmin y Xmax; Elevational Range,Evita los datos atípicos. Representa un promedio que busca ajustar los extremos.,antes
+barranquilla-equipo05,Especies con límites codificados como letra,Convertir L,F y M al punto medio del intervalo,,
+barranquilla-equipo02,Árbol filogenético,McGuire et al. 2014,Distribución posterior de Jetz et al. 2012 vía rtrees; megatree de McTavish et al. 2025,"Podría haberse elegido el más actualizado, sin embargo, el árbol de McGuire tiene un mayor número de especies de colibríes.",antes
+barranquilla-equipo00,Politomías y ramas de longitud cero,Dejar como están,"resolver al azar, colapsar, dejar como están, reemplazar las longitudes cero por un valor muy pequeño.",No hay politomías. No hay ramas de longitud cero.,antes
+barranquilla-equipo02,Emparejamiento de nombres,Coincidencia exacta tras cambiar espacios por guiones bajos,Sinonimia manual con la lista del IOC; búsqueda difusa con agrep,,
+barranquilla-equipo04,Exclusión de especies,,Usar la diferencia entre MinMass y MaxMass como varianza intraespecífica,,
+barranquilla-equipo03,Modelo,,PGLS con movimiento browniano; PGLS con Ornstein-Uhlenbeck; modelo mixto filogenético,,
