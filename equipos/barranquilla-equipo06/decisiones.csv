@@ -1,0 +1,13 @@
+﻿equipo;decision;opcion;alternativas;justificacion;momento
+barranquilla-equipo06;Fuente de masa corporal;Female MinMass;Male MinMass y  Female MaxMass;Respecto al numero de NA encontrados, contenia el mínimo de NA;antes
+barranquilla-equipo06;Transformación de la masa;Logaritmo natural;Sin transformar;Facilitar la comparación de datos.;antes
+barranquilla-equipo06;Resumen de la altitud; NormMax;NormMin ;Alternativa con la  menor cantidad de datos incompletos y decisión de objetivo a evaluar;antes
+barranquilla-equipo06;Especies con límites codificados como letra;No incorporado;No incorporado;No incorporado;antes
+barranquilla-equipo06;Especies con masa o altitud faltante;Eliminación por caso completo;Excluir por criterio biologico;Se elimino para evitar errores, la alternativa era imputar ;antes
+barranquilla-equipo06;Árbol filogenético;McTavish et al. 2025;Distribución posterior de Jetz et al. 2012 vía rtrees;Fue seleccionado por la calidad de los datos, se tomaron datos más actualizado y sin necesidad de cambios de nombres;antes
+barranquilla-equipo06;Número de árboles;Uno solo;Muestra de 100 árboles de la posterior;El árbol de McGuire es un solo árbol de consenso. Reconocemos que esto ignora la incertidumbre filogenética.;antes
+barranquilla-equipo06;Politomías;Resolución al azar con multi2di;Dejarlas;;antes
+barranquilla-equipo06;Ramas de longitud cero;Reemplazo por 1e-8;Colapsarlas;;antes
+barranquilla-equipo06;Emparejamiento de nombres;Coincidencia exacta tras cambiar espacios por guiones bajos;Sinonimia manual con la lista del IOC;;antes
+barranquilla-equipo06;Modelo;PGLS con lambda de Pagel estimada;PGLS con movimiento browniano;El browniano dio resultado de los parametros más sencillos.;antes
+barranquilla-equipo06;Error de medición;No incorporado;Usar la diferencia entre MinMass y MaxMass como varianza intraespecífica;BirdBase no reporta tamaños de muestra por especie, así que no podíamos convertir el rango en un error estándar defendible.;antes
