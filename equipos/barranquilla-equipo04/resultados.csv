@@ -1,0 +1,2 @@
+"equipo","respuesta","predictor","estimado","error_estandar","ic_inferior","ic_superior","valor_p","n","modelo","arbol"
+"barranquilla-equipo04","log(masa corporal)","DESCRIBE AQUI COMO RESUMISTE LA ALTITUD",0.0869996452671747,0.0299287159989254,0.0283404398057532,0.145658850728596,0.0040203713134236,224,"DESCRIBE AQUI EL MODELO QUE AJUSTASTE","DESCRIBE AQUI QUE ARBOL USASTE"
