@@ -1,10 +1,9 @@
-# Equipo 0
-
-Esta carpeta es el ejemplo de referencia. No es un equipo real y sus números no entran en la síntesis. Está aquí para que veas qué esperamos de cada entrega y con qué nivel de detalle.
+# Equipo 1
 
 ## Quiénes somos
 
-Aquí van los nombres completos de los integrantes, la institución de cada uno y el correo de contacto de quien coordina el equipo. Los nombres tal como quieren que aparezcan en el manuscrito.
+Ana Victoria Correa Salas, Universidad del Atlántico, avictoriacorrea@mail.uniatlantico.edu.co  
+Carlos Luis DoNascimiento, Universidad de Antioquia, tepuglanis@hotmail.com
 
 ## Qué hicimos
 
