@@ -1,10 +1,9 @@
-# Equipo 0
-
-Esta carpeta es el ejemplo de referencia. No es un equipo real y sus números no entran en la síntesis. Está aquí para que veas qué esperamos de cada entrega y con qué nivel de detalle.
+# Equipo 2
 
 ## Quiénes somos
 
-Aquí van los nombres completos de los integrantes, la institución de cada uno y el correo de contacto de quien coordina el equipo. Los nombres tal como quieren que aparezcan en el manuscrito.
+Angelly Sofia Ramos Villalba, Universidad del Atlántico, asramos@mail.uniatlantico.edu.co  
+Cristian David Clavijo Neira, Universidad Central, cclavijon@ucentral.edu.co
 
 ## Qué hicimos
 

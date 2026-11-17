@@ -1,10 +1,9 @@
-# Equipo 0
-
-Esta carpeta es el ejemplo de referencia. No es un equipo real y sus números no entran en la síntesis. Está aquí para que veas qué esperamos de cada entrega y con qué nivel de detalle.
+# Equipo 3
 
 ## Quiénes somos
 
-Aquí van los nombres completos de los integrantes, la institución de cada uno y el correo de contacto de quien coordina el equipo. Los nombres tal como quieren que aparezcan en el manuscrito.
+Brayan Andrés Botache Cerón, Universidad de Caldas, brayan.1712010867@ucaldas.edu.co  
+Flor Celeste Guevara Muñoz, fcguevara19@gmail.com
 
 ## Qué hicimos
 

@@ -1,10 +1,9 @@
-# Equipo 0
-
-Esta carpeta es el ejemplo de referencia. No es un equipo real y sus números no entran en la síntesis. Está aquí para que veas qué esperamos de cada entrega y con qué nivel de detalle.
+# Equipo 7
 
 ## Quiénes somos
 
-Aquí van los nombres completos de los integrantes, la institución de cada uno y el correo de contacto de quien coordina el equipo. Los nombres tal como quieren que aparezcan en el manuscrito.
+Jair David Barrera Liñan, Universidad del Atlántico, jairdbarrera@mail.uniatlantico.edu.co  
+Juan Diego Silva Arboleda, j.diegosilva2002@gmail.com
 
 ## Qué hicimos
 

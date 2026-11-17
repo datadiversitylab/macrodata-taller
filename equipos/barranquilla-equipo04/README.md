@@ -1,10 +1,10 @@
-# Equipo 0
-
-Esta carpeta es el ejemplo de referencia. No es un equipo real y sus números no entran en la síntesis. Está aquí para que veas qué esperamos de cada entrega y con qué nivel de detalle.
+# Equipo 4
 
 ## Quiénes somos
 
-Aquí van los nombres completos de los integrantes, la institución de cada uno y el correo de contacto de quien coordina el equipo. Los nombres tal como quieren que aparezcan en el manuscrito.
+Daniela Pineda Marin, Universidad de Caldas, daniela.pineda41719@ucaldas.edu.co  
+Edgar Dario Gañan Bueno, Universidad de Caldas, edgar.ganan29729@ucaldas.edu.co  
+Yamileth Domínguez Haydar, Universidad del Atlántico, yamilethdominguez@mail.uniatlantico.edu.co
 
 ## Qué hicimos
 
