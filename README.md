@@ -42,7 +42,7 @@ No hay respuesta correcta en esta lista. Hay respuestas justificables, y queremo
 ## Estructura del repositorio
 
 ```
-datos/            # Datos crudos. No se modifican nunca
+datos/            # Datos en bruto
   birdbase/
   arboles/
 equipos/
@@ -54,8 +54,7 @@ equipos/
   ciudad-equipo02/
     ...
 scripts/          # Funciones compartidas y puntos de control del taller
-sintesis/         # Análisis conjunto de todos los equipos
-manuscrito/
+taller/         # scripts usados en MacroData
 ```
 
 Cada equipo trabaja únicamente dentro de su propia carpeta.
@@ -63,7 +62,7 @@ Cada equipo trabaja únicamente dentro de su propia carpeta.
 ## Cómo contribuir
 
 1. Clona el repositorio y crea una rama con el nombre de tu equipo.
-2. Trabaja dentro de `equipos/tu-ciudad-tu-equipo/`. *No modifiques nada más*
+2. Trabaja dentro de `equipos/ciudad-equipo/`. *No modifiques nada más*
 3. Escribe el análisis en `analisis.R`. Debe correr de principio a fin en una sesión limpia de R, leyendo desde `datos/` y escribiendo sus salidas en tu carpeta. Si no corre en la máquina de otra persona, no lo podemos usar.
 4. Llena `decisiones.csv` a medida que avanzas, no al final.
 5. Guarda los resultados en `resultados.csv` con el formato descrito abajo.

@@ -37,10 +37,8 @@ Los puntos de control se llaman entre sí, así que puedes cargar directamente e
 
 `03` escribe `datos/colibries_limpio.csv`. `05` escribe `datos/colibries_listo.RData` con el árbol y la matriz ya empatados y en el mismo orden. `08` escribe todo dentro de la carpeta de tu equipo.
 
-Los datos crudos en `datos/birdbase/` y `datos/arboles/` no se modifican nunca.
+Los datos en bruto en `datos/birdbase/` y `datos/arboles/` no se modifican nunca.
 
 ## Si algo no corre
 
-Reinicia R con Ctrl+Shift+F10 y vuelve a correr el script desde arriba. La mitad de los problemas son objetos viejos que quedaron en la sesión.
-
-Si sigue sin correr, hoja de color sobre la tapa del computador.
+Reinicia R con Ctrl+Shift+F10 y vuelve a correr el script desde arriba. Si sigue sin correr, hoja de color sobre la tapa del computador.
