@@ -10,12 +10,18 @@ arbol
 plot(arbol, cex = 0.3, no.margin = TRUE)
 
 # En abanico se ven mejor las especies
-plot(arbol, type = "fan", cex = 0.25, no.margin = TRUE)
+plot(arbol, type = "phylogram", cex = 0.25, no.margin = TRUE)
 
 # Eso que acabas de graficar es la historia evolutiva de los colibries
 Ntip(arbol)
+arbol$tip.label
 
 # Y estas son cinco de sus especies
-head(arbol$tip.label, 5)
+head (arbol$tip.label, 5)
 
 # El resto de los dos dias es aprender a trabajar con esto
+
+
+arbol$tip.label[1:5]
+
+
