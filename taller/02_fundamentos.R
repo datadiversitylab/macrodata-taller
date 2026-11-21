@@ -72,10 +72,22 @@ for (i in 1:nrow(colibries)) {
   print(colibries$especie[i])
 }
 
+###Solución de Tarea#######
+for (i in 1:nrow(colibries)) {
+  if(colibries$masa[i]> 5){
+    print("colibrí pesado")
+  } else {
+  print("Colibrí liviano")
+}
+}
+##########################
+
 # Esto hace lo mismo sin loop
 sapply(colibries, class)
-tapply(colibries$masa, colibries$masa > 5, mean)
+tapply(colibries$masa, colibries$masa > 5, mean)## Operar Valores con factores aplicandoles diferentes funciones
 
 # Graficar
-plot(colibries$masa, colibries$log_masa, pch = 16, xlab = "Masa (g)", ylab = "log masa")
-hist(colibries$masa)
+plot(colibries$masa, colibries$log_masa, pch = 16, xlab = "Masa (g)", ylab = "log masa", title("Masa Colibríes"))
+hist(colibries$masa, breaks = "Sturges", col = "darkgreen", border = TRUE, main = "Histograma de Colibríes", xlab = "masa (log)", ylab = "# de Colibríes", axes = T)
+
+dev.off()
