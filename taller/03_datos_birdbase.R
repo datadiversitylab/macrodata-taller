@@ -2,7 +2,7 @@
 
 # check.names = FALSE conserva los nombres originales, que tienen espacios
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
-
+#datos <- datos[,1:25]
 # Mirar antes de modificar. Siempre
 dim(datos)
 str(datos[, 1:10])
@@ -26,6 +26,7 @@ colibries <- data.frame(
 )
 
 str(colibries)
+dim(colibries)
 
 # La altitud puede que no siempre sea un numero
 head(sort(unique(colibries$norm_min)))
@@ -51,6 +52,7 @@ colibries$altitud <- (colibries$norm_min + colibries$norm_max) / 2
 sum(is.na(colibries$masa))
 sum(is.na(colibries$altitud))
 colSums(is.na(colibries))
+?colSums
 
 # Explorar
 summary(colibries$masa)
