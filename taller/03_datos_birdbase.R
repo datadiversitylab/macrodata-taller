@@ -72,3 +72,4 @@ completos <- colibries[!is.na(colibries$masa) & !is.na(colibries$altitud), ]
 nrow(completos)
 
 write.csv(completos, "datos/colibries_limpio.csv", row.names = FALSE)
+#Estudiar
