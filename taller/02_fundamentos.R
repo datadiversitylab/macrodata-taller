@@ -21,7 +21,7 @@ masas > 5
 masas[1]
 masas[c(1, 3)]
 masas[masas > 5]
-especies[masas > 5]
+especies[masas > 5] ##Esta saca las especies que son verdaderas o que quiere decir cuales son las que si  cumplen la funcion de mayor
 
 # Data frame. Vectores del mismo largo puestos en columnas
 colibries <- data.frame(especie = especies, masa = masas, stringsAsFactors = FALSE)
@@ -52,6 +52,8 @@ mean(con_na)
 mean(con_na, na.rm = TRUE)
 is.na(con_na)
 sum(is.na(con_na))
+##Esta seccion nos ayuda a saber si lo vamos a imputar o borrar los datos faltantes, osea los que aparecen como NA
+
 
 # Funciones
 convertir_a_kg <- function(gramos) {
@@ -59,6 +61,8 @@ convertir_a_kg <- function(gramos) {
 }
 
 convertir_a_kg(colibries$masa)
+##Tiene argumentos y tiene cuerpo 
+
 
 # Condicionales
 if (mean(colibries$masa) > 5) {
