@@ -22,44 +22,17 @@ colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 # --- DECISION 1. Que columna de masa -----------------------------------------
 # Average Mass, solo machos, solo hembras, punto medio de minimo y maximo
 
-masa <- colibries$"Average Mass"
-
+colibries$masa <- colibries$`Average Mass`
 
 # --- DECISION 2. Transformar o no --------------------------------------------
 # Sin transformar, logaritmo, raiz cuadrada
 
-log_masa <- log(masa)
-
+colibries$log_masa <- log(colibries$masa)
 
 # --- DECISION 3. Como resumir la altitud -------------------------------------
 # NormMin, NormMax, punto medio del rango normal, punto medio de Xmin y Xmax
 
-
-# --- DECISION 4. Especies con L, F o M ---------------------------------------
-# Descartar, convertir al punto medio, imputar, tratar como categorica
-
-convertir_altitud <- function(x) {
-  x <- trimws(as.character(x))
-  equivalencias <- c(L = 250, F = 750, M = 1500)
-  numerico <- suppressWarnings(as.numeric(x))
-  letra <- x %in% names(equivalencias)
-  numerico[letra] <- equivalencias[x[letra]]
-  numerico
-}
-
-norm_min <- convertir_altitud(colibries$"NormMin")
-norm_max <- convertir_altitud(colibries$"NormMax")
-altitud <- (norm_min + norm_max) / 2
-
-colibries$"Scientific Name" <- colibries$`Latin (BirdLife > IOC > Clements>AviList)`
-
-tabla <- data.frame(
-  especie = colibries$`Scientific Name`,
-  log_masa = log_masa,
-  altitud_km = altitud / 1000,
-  stringsAsFactors = FALSE
-)
-
+colibries$altitud <- (colibries$NormMin + colibries$NormMax) / 2
 
 # --- DECISION 5. Que arbol ---------------------------------------------------
 # McGuire et al. 2014, rtrees con Jetz et al. 2012, megatree de McTavish 2025
