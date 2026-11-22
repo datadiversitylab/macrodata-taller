@@ -198,7 +198,7 @@ write.csv(resultados, file.path(salida, "resultados.csv"), row.names = FALSE)
 png(file.path(salida, "figura.png"), width = 1400, height = 1200, res = 200)
 plot(tabla$altitud_km, tabla$log_masa, pch = 16, col = rgb(0, 0, 0, 0.5),
      xlab = "Altitud (km)", ylab = "log masa (g)", main = equipo)
-abline(coef(modelo), lwd = 2)
+abline(coef(modelo), col="red", lwd = 2)
 dev.off()
 
 writeLines(capture.output(sessionInfo()), file.path(salida, "sessionInfo.txt"))
