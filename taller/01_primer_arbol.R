@@ -5,7 +5,7 @@ library(ape)
 
 arbol <- read.tree("datos/arboles/McTavish.tre")
 
-arbol
+arbol 
 
 plot(arbol, cex = 0.3, no.margin = TRUE)
 
