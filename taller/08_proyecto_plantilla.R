@@ -17,6 +17,7 @@ datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsF
 colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 
 
+
 # --- DECISION 1. Que columna de masa -----------------------------------------
 # Average Mass, solo machos, solo hembras, punto medio de minimo y maximo
 
