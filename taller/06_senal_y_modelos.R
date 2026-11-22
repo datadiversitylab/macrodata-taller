@@ -1,5 +1,14 @@
 # Dia 2, bloque 1. Señal filogenetica y modelos de evolucion
 
+
+# lambda es para caracteres continuos- no hay modelo
+#k de blomerg discretos (cuanto se parecen las especies emparentadas)-si hay modelo 
+#el arbol debe tener tiempo calibrado y los terminales son especies 
+#el arbol puede ser morfologia, evidencia total, molecular etc 
+#en ornstein- unlenbeck tiene un optimo (selección estabilizadora) mientras que lambda no 
+# early burst  cambios fuertes y luego éstasis (estabilizador en los cambios de los caracteres)
+# ci = BIC o BIC o CIC 
+
 library(ape)
 library(geiger)
 library(phytools)
@@ -73,3 +82,18 @@ abline(h = 0, v = 0, col = "gray70")
 
 # La regresion sobre contrastes va sin intercepto
 summary(lm(cm ~ ca - 1))
+regresion <- lm(cm ~ ca - 1)
+r <- plot(regresion) 
+
+
+
+library(ggplot2)
+
+ggplot(datos) +
+ aes(x = altitud, y = masa) +
+ geom_smooth(method = "lm", se = TRUE, colour = "#112446") +
+ geom_point(colour = "#112446") +
+ scale_y_continuous(trans = "log") +
+ labs(title = "regresión") +
+ theme_minimal()
+

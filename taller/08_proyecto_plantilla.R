@@ -10,7 +10,7 @@ library(nlme)
 
 # Ciudades: bogota, barranquilla, pasto, quibdo
 
-equipo <- "ciudad-equipoXX" # Tienes que modificar la ciudad y el numero
+equipo <- "pasto-equipo04" # Tienes que modificar la ciudad y el numero
 salida <- file.path("equipos", equipo)
 
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)

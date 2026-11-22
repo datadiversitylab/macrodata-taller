@@ -27,7 +27,7 @@ phytools::phylosig(arbol, setNames(residuals(normal), rownames(datos)),
 
 if (!is.binary(arbol)) arbol <- multi2di(arbol)
 arbol$edge.length[arbol$edge.length == 0] <- 1e-8
-
+any(arbol$edge.length == 0)
 
 # --- PGLS --------------------------------------------------------------------
 
@@ -74,3 +74,4 @@ abline(coef(pgls_lambda), lwd = 2)
 legend("topleft", c("lm", "PGLS"), lty = c(2, 1), lwd = c(1, 2), bty = "n")
 
 # Esa distancia entre las dos lineas es el efecto de la filogenia
+
