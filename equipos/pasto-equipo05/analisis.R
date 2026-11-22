@@ -2,8 +2,8 @@
 # Copia este archivo a equipos/tu-ciudad-tu-equipo/analisis.R y trabaja alli
 # Cada DECISION es una fila de decisiones.csv. Escribela cuando la tomes
 
-# Nombre 1: Diana Lorena Gil-Vargas
-# Nombre 2: Julian Barragan Ayala
+# Nombre 1: Diana Lorena Gil-Vargas 3026365035
+# Nombre 2: Julian Barragan Ayala 3245771371
 
 library(ape)
 library(nlme)
@@ -18,52 +18,60 @@ colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 
 
 # --- DECISION 1. Que columna de masa -----------------------------------------
-# Average Mass, solo machos, solo hembras, punto medio de minimo y maximo
+# Average Mass (macho-hembras) (g) sin sesgo sobre el sexo (variable y)
 
 masa <- colibries$"Average Mass"
 
 
 # --- DECISION 2. Transformar o no --------------------------------------------
-# Sin transformar, logaritmo, raiz cuadrada
+# Transformar a logaritmo para observar los cambios proporcionales de masa
 
 log_masa <- log(masa)
 
 
 # --- DECISION 3. Como resumir la altitud -------------------------------------
-# NormMin, NormMax, punto medio del rango normal, punto medio de Xmin y Xmax
+# punto medio del rango normal (m) para evitar problemas de escala
+xmin <- as.numeric(colibries$NormMin)
+xmax <- as.numeric(colibries$NormMax)
 
+ssp_al <- c()
+spp_al <- c()
+for(i in seq_along(xmin)){
+  spp_al[i] <- mean(c(xmin[i], xmax[i]), na.rm = TRUE)
+}
+
+altitud <- spp_al
 
 # --- DECISION 4. Especies con L, F o M ---------------------------------------
 # Descartar, convertir al punto medio, imputar, tratar como categorica
 
-convertir_altitud <- function(x) {
-  x <- trimws(as.character(x))
-  equivalencias <- c(L = 250, F = 750, M = 1500)
-  numerico <- suppressWarnings(as.numeric(x))
-  letra <- x %in% names(equivalencias)
-  numerico[letra] <- equivalencias[x[letra]]
-  numerico
-}
+#convertir_altitud <- function(x) {
+#  x <- trimws(as.character(x))
+#  equivalencias <- c(L = 250, F = 750, M = 1500)
+#  numerico <- suppressWarnings(as.numeric(x))
+#  letra <- x %in% names(equivalencias)
+#  numerico[letra] <- equivalencias[x[letra]]
+#  numerico
+#}
 
-norm_min <- convertir_altitud(colibries$"NormMin")
-norm_max <- convertir_altitud(colibries$"NormMax")
-altitud <- (norm_min + norm_max) / 2
+#norm_min <- convertir_altitud(colibries$"NormMin")
+#norm_max <- convertir_altitud(colibries$"NormMax")
+#altitud <- (norm_min + norm_max) / 2
 
-colibries$"Scientific Name" <- colibries$`Latin (BirdLife > IOC > Clements>AviList)`
+colibries$"Scientific Name" <- colibries$`AviList v1 2025`
 
 tabla <- data.frame(
   especie = colibries$`Scientific Name`,
   log_masa = log_masa,
-  altitud_km = altitud / 1000,
+  altitud_km = altitud / 1000, #conversion a KM
   stringsAsFactors = FALSE
 )
-
 
 # --- DECISION 5. Que arbol ---------------------------------------------------
 # McGuire et al. 2014, rtrees con Jetz et al. 2012, megatree de McTavish 2025
 # Y si usas uno solo o una muestra de la posterior
 
-arbol <- read.tree("datos/arboles/McTavish.tre")
+arbol <- read.tree("datos/arboles/McTavish.tre") # Menos especies sin empatar
 
 
 # --- DECISION 7. Como empatar los nombres ------------------------------------
@@ -81,6 +89,7 @@ write.csv(data.frame(especie = no_empataron), file.path(salida, "nombres_sin_emp
 
 tabla <- tabla[!is.na(tabla$log_masa) & !is.na(tabla$altitud_km), ]
 tabla <- tabla[tabla$especie_arbol %in% en_ambos, ]
+tabla <- tabla[tabla$especie_arbol != "Riccordia bracei", ] #especie extinta
 
 arbol <- drop.tip(arbol, setdiff(arbol$tip.label, tabla$especie_arbol))
 rownames(tabla) <- tabla$especie_arbol
