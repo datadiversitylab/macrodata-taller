@@ -22,7 +22,7 @@ colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 # --- DECISION 1. Que columna de masa -----------------------------------------
 # Average Mass, solo machos, solo hembras, punto medio de minimo y maximo
 
-colibries$masa <- colibries$`Average Mass`
+colibries$masa <- as.numeric(colibries$`Average Mass`)
 
 # --- DECISION 2. Transformar o no --------------------------------------------
 # Sin transformar, logaritmo, raiz cuadrada
@@ -32,7 +32,33 @@ colibries$log_masa <- log(colibries$masa)
 # --- DECISION 3. Como resumir la altitud -------------------------------------
 # NormMin, NormMax, punto medio del rango normal, punto medio de Xmin y Xmax
 
-colibries$altitud <- (colibries$NormMin + colibries$NormMax) / 2
+colibries <- colibries[!is.na(colibries$log_masa), ]
+nrow(colibries)
+
+# --- DECISION 4. Especies con L, F o M ---------------------------------------
+# Descartar, convertir al punto medio, imputar, tratar como categorica
+
+convertir_altitud <- function(x) {
+  x <- trimws(as.character(x))
+  equivalencias <- c(L = 250, F = 750, M = 1500)
+  numerico <- suppressWarnings(as.numeric(x))
+  letra <- x %in% names(equivalencias)
+  numerico[letra] <- equivalencias[x[letra]]
+  numerico
+}
+
+norm_min <- convertir_altitud(colibries$NormMin)
+norm_max <- convertir_altitud(colibries$NormMax)
+colibries$altitud <- (norm_min + norm_max) / 2
+
+colibries$`Scientific Name` <- colibries$`Latin (BirdLife > IOC > Clements>AviList)`
+
+tabla <- data.frame(
+  especie = colibries$`Scientific Name`,
+  log_masa = colibries$log_masa,
+  altitud_km = colibries$altitud / 1000,
+  stringsAsFactors = FALSE
+)
 
 # --- DECISION 5. Que arbol ---------------------------------------------------
 # McGuire et al. 2014, rtrees con Jetz et al. 2012, megatree de McTavish 2025
@@ -40,6 +66,13 @@ colibries$altitud <- (colibries$NormMin + colibries$NormMax) / 2
 
 arbol <- read.tree("datos/arboles/McTavish.tre")
 
+# --- DECISION 6. Politomias y ramas de longitud cero -------------------------
+# Resolver al azar, colapsar, dejarlas, reemplazar los ceros
+# Elegida: resolver al azar y reemplazar ceros por 1e-8
+
+set.seed(1)
+if (!is.binary(arbol)) arbol <- multi2di(arbol)
+arbol$edge.length[arbol$edge.length == 0] <- 1e-8
 
 # --- DECISION 7. Como empatar los nombres ------------------------------------
 # Exacto, sinonimia manual con una lista taxonomica, busqueda difusa
@@ -48,14 +81,16 @@ tabla$especie_arbol <- gsub(" ", "_", tabla$especie)
 en_ambos <- intersect(arbol$tip.label, tabla$especie_arbol)
 
 no_empataron <- setdiff(tabla$especie_arbol, arbol$tip.label)
-write.csv(data.frame(especie = no_empataron), file.path(salida, "nombres_sin_empatar.csv"), row.names = FALSE)
-
+write.csv(data.frame(especie = no_empataron),
+          file.path(salida, "nombres_sin_empatar.csv"), row.names = FALSE)
+length(no_empataron)
 
 # --- DECISION 8. Que especies excluir ----------------------------------------
 # Casos completos, imputacion por genero, imputacion filogenetica
 
 tabla <- tabla[!is.na(tabla$log_masa) & !is.na(tabla$altitud_km), ]
 tabla <- tabla[tabla$especie_arbol %in% en_ambos, ]
+stopifnot(!anyDuplicated(tabla$especie_arbol))
 
 arbol <- drop.tip(arbol, setdiff(arbol$tip.label, tabla$especie_arbol))
 rownames(tabla) <- tabla$especie_arbol
@@ -64,22 +99,12 @@ tabla <- tabla[arbol$tip.label, ]
 # Sin este TRUE nada de lo que sigue sirve
 all(rownames(tabla) == arbol$tip.label)
 
-
-# --- DECISION 6. Politomias y ramas de longitud cero -------------------------
-# Resolver al azar, colapsar, dejarlas, reemplazar los ceros
-
-if (!is.binary(arbol)) arbol <- multi2di(arbol)
-arbol$edge.length[arbol$edge.length == 0] <- 1e-8
-
-
 # --- DECISION 9. Que modelo --------------------------------------------------
 # corBrownian, corPagel, corMartins, modelo mixto. Y si incluyes error de medicion
 
 modelo <- gls(log_masa ~ altitud_km,
               correlation = corPagel(1, phy = arbol, form = ~especie_arbol),
               data = tabla, method = "ML")
-
-summary(modelo)
 
 
 # --- Guardar -----------------------------------------------------------------
