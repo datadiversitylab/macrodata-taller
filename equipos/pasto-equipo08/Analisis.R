@@ -128,6 +128,10 @@ tabla
 arbol <- read.tree("datos/arboles/McTavish.tre")
 
 
+# --- DECISIÓN 6. Politomías y ramas de longitud 0 
+
+
+
 # --- DECISION 7. Como empatar los nombres ------------------------------------
 # Exacto, sinonimia manual con una lista taxonomica, busqueda difusa
 
