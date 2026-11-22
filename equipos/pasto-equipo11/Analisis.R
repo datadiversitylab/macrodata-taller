@@ -15,7 +15,7 @@ salida <- file.path("equipos", equipo)
 
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
 colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
-
+View(colibries)
 
 # --- DECISION 1. Que columna de masa -----------------------------------------
 # Average Mass, solo machos, solo hembras, punto medio de minimo y maximo
@@ -28,7 +28,6 @@ masa <- colibries$"Average Mass"
 
 log_masa <- log(masa)
 
-
 # --- DECISION 3. Como resumir la altitud -------------------------------------
 # NormMin, NormMax, punto medio del rango normal, punto medio de Xmin y Xmax
 
@@ -38,16 +37,17 @@ log_masa <- log(masa)
 
 convertir_altitud <- function(x) {
   x <- trimws(as.character(x))
-  equivalencias <- c(L = 250, F = 750, M = 1500)
+  equivalencias <- c(L = 250, F = 750, M = 2000)
   numerico <- suppressWarnings(as.numeric(x))
   letra <- x %in% names(equivalencias)
   numerico[letra] <- equivalencias[x[letra]]
   numerico
 }
 
-norm_min <- convertir_altitud(colibries$"NormMin")
-norm_max <- convertir_altitud(colibries$"NormMax")
+norm_min <- convertir_altitud(colibries$NormMin)
+norm_max <- convertir_altitud(colibries$NormMax)
 altitud <- (norm_min + norm_max) / 2
+
 
 colibries$"Scientific Name" <- colibries$`Latin (BirdLife > IOC > Clements>AviList)`
 
@@ -58,13 +58,13 @@ tabla <- data.frame(
   stringsAsFactors = FALSE
 )
 
+View(tabla)
 
 # --- DECISION 5. Que arbol ---------------------------------------------------
 # McGuire et al. 2014, rtrees con Jetz et al. 2012, megatree de McTavish 2025
 # Y si usas uno solo o una muestra de la posterior
 
 arbol <- read.tree("datos/arboles/McTavish.tre")
-
 
 # --- DECISION 7. Como empatar los nombres ------------------------------------
 # Exacto, sinonimia manual con una lista taxonomica, busqueda difusa
