@@ -2,8 +2,8 @@
 # Copia este archivo a equipos/tu-ciudad-tu-equipo/analisis.R y trabaja alli
 # Cada DECISION es una fila de decisiones.csv. Escribela cuando la tomes
 
-# Nombre 1: [Nombre integrante 1]
-# Nombre 2: [Nombre integrante 2]
+# Nombre 1: [Sebastián Morales Morales]
+# Nombre 2: [Milena Villareal]
 
 library(ape)
 library(nlme)
