@@ -1,0 +1,32 @@
+R version 4.6.2 (2026-10-29 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 26300)
+
+Matrix products: default
+  LAPACK version 3.12.1
+
+locale:
+[1] LC_COLLATE=Spanish_Colombia.utf8  LC_CTYPE=Spanish_Colombia.utf8   
+[3] LC_MONETARY=Spanish_Colombia.utf8 LC_NUMERIC=C                     
+[5] LC_TIME=Spanish_Colombia.utf8    
+
+time zone: America/Bogota
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] nlme_3.1-172 ape_5.8-1   
+
+loaded via a namespace (and not attached):
+ [1] geiger_2.0.12           doParallel_1.0.17       cli_3.6.6               rlang_1.3.0            
+ [5] generics_0.1.4          deSolve_1.42            clusterGeneration_1.3.8 subplex_1.9            
+ [9] scatterplot3d_0.3-45    quadprog_1.5-8          grid_4.6.2              expm_1.0-1             
+[13] MASS_7.3-66             lifecycle_1.0.5         foreach_1.5.2           mvtnorm_1.4-2          
+[17] numDeriv_2016.8-1.1     compiler_4.6.2          igraph_2.3.4            codetools_0.2-20       
+[21] coda_0.19-4.1           pkgconfig_2.0.3         fastmatch_1.1-8         Rcpp_1.1.2             
+[25] DEoptim_2.2-8           rstudioapi_0.19.0       optimParallel_1.0-3     maps_3.4.4             
+[29] phangorn_2.12.1         lattice_0.23-1          digest_0.6.39           mnormt_2.1.2           
+[33] parallel_4.6.2          magrittr_2.0.5          Matrix_1.7-6            tools_4.6.2            
+[37] iterators_1.0.14        combinat_0.0-9          phytools_2.5-2         
