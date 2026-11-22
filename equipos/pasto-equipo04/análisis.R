@@ -26,12 +26,49 @@ masa <- colibries$"Average Mass"
 # --- DECISION 2. Transformar o no --------------------------------------------
 # Sin transformar, logaritmo, raiz cuadrada
 
+any(is.na(colibries$`Average Mass`))
+sum(is.na(colibries$`Average Mass`))
+colibries<- colibries[-is.na(colibries$`Average Mass`), ]
+
+library("ggplot2")
+ggplot(colibries) +
+  aes(x = `Average Mass`) +
+  geom_histogram(bins = 30L, fill = "#112446") +
+  theme_minimal()
+
+
+ggplot(colibries) +
+  aes(x = `Average Mass`) +
+  geom_histogram(bins = 30L, fill = "#112446") +
+  scale_x_continuous(trans = "log") +
+  theme_minimal()
+
+
 log_masa <- log(masa)
+
 
 
 # --- DECISION 3. Como resumir la altitud -------------------------------------
 # NormMin, NormMax, punto medio del rango normal, punto medio de Xmin y Xmax
 
+
+
+any(is.na(colibries$NormMax))
+sum(is.na(colibries$NormMax))
+colibries <-colibries[!colibries$Species %in% c( 	
+ "aethopygus",  "veraguensis", "letitiae", "lawrencei"
+ ), ]
+
+
+any(is.na(colibries$NormMin))
+sum(is.na(colibries$NormMin))
+colibries[is.na(colibries$NormMin), ]
+class(colibries$NormMax)
+class(colibries$NormMin)
+as.numeric(colibries$NormMax)
+as.numeric(colibries$NormMin)
+
+colibries$NormMid <- (colibries$NormMin + colibries$NormMax) / 2
 
 # --- DECISION 4. Especies con L, F o M ---------------------------------------
 # Descartar, convertir al punto medio, imputar, tratar como categorica
