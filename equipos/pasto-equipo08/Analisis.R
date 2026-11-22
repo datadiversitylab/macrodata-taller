@@ -7,27 +7,69 @@
 
 library(ape)
 library(nlme)
+library(MASS)
 
 # Ciudades: bogota, barranquilla, pasto, quibdo
 
-equipo <- "ciudad-equipoXX" # Tienes que modificar la ciudad y el numero
+equipo <- "pasto-equipo08" # Tienes que modificar la ciudad y el numero
 salida <- file.path("equipos", equipo)
 
 datos <- read.csv("datos/birdbase/birdbase.csv", check.names = FALSE, stringsAsFactors = FALSE)
 colibries <- datos[datos$`Family IOC 15.1` == "Trochilidae", ]
 
+head(datos)
 
 # --- DECISION 1. Que columna de masa -----------------------------------------
 # Average Mass, solo machos, solo hembras, punto medio de minimo y maximo
 
+
 masa <- colibries$"Average Mass"
+
+#spp_av <- c()
+#for(i in seq_along(colibries[,1])){
+ # spp_av[i] <- mean(c(colibries$`Male MinMass`[i], colibries$`Female MinMass`[i]), na.rm = TRUE)
+#}
+#spp_av
 
 
 # --- DECISION 2. Transformar o no --------------------------------------------
 # Sin transformar, logaritmo, raiz cuadrada
 
 log_masa <- log(masa)
+sqrt_masa <- sqrt(masa)
 
+var(log_masa, na.rm = T)
+var(log_masa, na.rm = T)
+
+### Se realiza una prueba antes de tomar la desición
+
+masa <- na.omit(colibries$`Average Mass`)
+
+# 2. Prueba de Box-Cox (evalúa la potencia exacta que normaliza la variable)
+bc <- boxcox(lm(masa ~ 1), lambda = seq(-2, 2, by = 0.05), plotit = TRUE)
+lambda_optimo <- bc$x[which.max(bc$y)]
+
+lambda_optimo
+
+# 3. Prueba de normalidad de Shapiro-Wilk para cada transformación
+# (Si tienes más de 5000 datos, usa ks.test en su lugar)
+sw_orig <- shapiro.test(masa)$statistic
+sw_sqrt <- shapiro.test(sqrt(masa))$statistic
+sw_log  <- shapiro.test(log(masa))$statistic
+
+# 4. Tabla resumen de decisión
+resultados <- data.frame(
+  Transformacion = c("Sin transformar (lambda = 1)", "Raíz cuadrada (lambda = 0.5)", "Logaritmo (lambda = 0)"),
+  Estadistico_W  = round(c(sw_orig, sw_sqrt, sw_log), 4),
+  Distancia_a_Lambda = round(abs(c(1, 0.5, 0) - lambda_optimo), 3)
+)
+
+cat("Lambda óptimo de Box-Cox:", round(lambda_optimo, 3), "\n\n")
+print(resultados)
+
+#Considerando el valor óptimo de la prueba de BoxCox, el cual está más cercano a 0 
+# se determina trabajar con la transformación basada en logaritmo. 
+log_masa <- log(masa)
 
 # --- DECISION 3. Como resumir la altitud -------------------------------------
 # NormMin, NormMax, punto medio del rango normal, punto medio de Xmin y Xmax
@@ -35,6 +77,24 @@ log_masa <- log(masa)
 
 # --- DECISION 4. Especies con L, F o M ---------------------------------------
 # Descartar, convertir al punto medio, imputar, tratar como categorica
+
+# La altitud puede que no siempre sea un numero
+head(sort(unique(colibries$`Elevational Range`)))
+#table(colibries$Xmin[is.na(suppressWarnings(as.numeric(colibries$Xmin)))])
+
+# L es tierras bajas, F es piedemonte, M es montano
+convertir_altitud <- function(x) {
+  x <- trimws(as.character(x))
+  equivalencias <- c(L = 250, F = 750, M = 1500)
+  numerico <- suppressWarnings(as.numeric(x))
+  letra <- x %in% names(equivalencias)
+  numerico[letra] <- equivalencias[x[letra]]
+  numerico
+}
+
+
+# Convertir letras a numeros 
+colibries$altitud <- (colibries$`Elevational Range` + colibries$`Elevational Range`) / 2
 
 convertir_altitud <- function(x) {
   x <- trimws(as.character(x))
@@ -45,9 +105,10 @@ convertir_altitud <- function(x) {
   numerico
 }
 
-norm_min <- convertir_altitud(colibries$"NormMin")
-norm_max <- convertir_altitud(colibries$"NormMax")
-altitud <- (norm_min + norm_max) / 2
+ampL <- convertir_altitud(colibries$`Elevational Range`)
+#x_max <- convertir_altitud(colibries$"Xmax")
+#altitud <- (x_min + x_max) / 2
+altitud <- (ampL)/2
 
 colibries$"Scientific Name" <- colibries$`Latin (BirdLife > IOC > Clements>AviList)`
 
@@ -58,6 +119,7 @@ tabla <- data.frame(
   stringsAsFactors = FALSE
 )
 
+tabla
 
 # --- DECISION 5. Que arbol ---------------------------------------------------
 # McGuire et al. 2014, rtrees con Jetz et al. 2012, megatree de McTavish 2025
