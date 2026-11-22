@@ -154,6 +154,6 @@ file.path(salida, "decisiones.csv")
 
 # Copia a tu path y modifica el README.md
 file.path(salida, "README.md")
-file.path("equipos/bogota-equipo00/README.md")
+file.path("equipos/pasto-equipo05/README.md")
 
 
