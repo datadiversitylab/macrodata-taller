@@ -6,6 +6,7 @@ arbol <- read.tree("datos/arboles/McTavish.tre")
 
 # Un objeto phylo es una lista con cuatro partes
 class(arbol)
+class(list(arbol))
 names(arbol)
 
 Ntip(arbol)
@@ -50,6 +51,7 @@ plot(keep.tip(arbol, un_genero), no.margin = TRUE)
 datos <- read.csv("datos/colibries_limpio.csv", stringsAsFactors = FALSE)
 
 # El arbol usa guion bajo, la matriz usa espacio
+
 head(arbol$tip.label)
 head(datos$especie)
 
