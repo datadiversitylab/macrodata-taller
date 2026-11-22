@@ -117,19 +117,19 @@ arbol <- read.tree("datos/arboles/McGuire.tre")
 tabla2$especie_arbol <- gsub(" ", "_", tabla2$especie)
 en_ambos <- intersect(arbol$tip.label, tabla2$especie_arbol)
 
-no_empataron <- setdiff(tabla$especie_arbol, arbol$tip.label)
+no_empataron <- setdiff(tabla2$especie_arbol, arbol$tip.label)
 write.csv(data.frame(especie = no_empataron), file.path(salida, "nombres_sin_empatar.csv"), row.names = FALSE)
 
 
 # --- DECISION 8. Que especies excluir ----------------------------------------
 # Casos completos, imputacion por genero, imputacion filogenetica
 
-tabla <- tabla[!is.na(tabla$log_masa) & !is.na(tabla$altitud_km), ]
-tabla <- tabla[tabla$especie_arbol %in% en_ambos, ]
+tabla3 <- tabla2[!is.na(tabla2$log_masa) & !is.na(tabla2$altitud_km), ]
+tabla3 <- tabla2[tabla2$especie_arbol %in% en_ambos, ]
 
-arbol <- drop.tip(arbol, setdiff(arbol$tip.label, tabla$especie_arbol))
-rownames(tabla) <- tabla$especie_arbol
-tabla <- tabla[arbol$tip.label, ]
+arbol <- drop.tip(arbol, setdiff(arbol$tip.label, tabla3$especie_arbol))
+rownames(tabla3) <- tabla3$especie_arbol
+tabla4 <- tabla3[arbol$tip.label, ]
 
 # Sin este TRUE nada de lo que sigue sirve
 all(rownames(tabla) == arbol$tip.label)
