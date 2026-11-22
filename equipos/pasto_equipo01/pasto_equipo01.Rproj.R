@@ -152,7 +152,7 @@ modelo <- gls(log_masa ~ altitud_km,
 summary(modelo)
 
 
-# --- Guardar -----------------------------------------------------------------
+## --- Guardar -----------------------------------------------------------------
 
 coeficientes <- summary(modelo)$tTable
 intervalo <- confint(modelo)
