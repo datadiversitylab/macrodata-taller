@@ -62,14 +62,14 @@ summary(pgls_lambda)$tTable["altitud_km", ]
 res <- residuals(pgls_lambda, type = "normalized")
 qqnorm(res); qqline(res)
 plot(fitted(pgls_lambda), res, pch = 16, col = rgb(0, 0, 0, 0.4))
-abline(h = 0, col = "gray50")
+abline(h = 0, col = "red")
 
 
 # --- Graficar el resultado ---------------------------------------------------
 
 plot(datos$altitud_km, datos$log_masa, pch = 16, col = rgb(0, 0, 0, 0.4),
      xlab = "Altitud (km)", ylab = "log masa (g)")
-abline(coef(normal), lty = 2, col = "gray50")
+abline(coef(normal), lty = 2, col = "red")
 abline(coef(pgls_lambda), lwd = 2)
 legend("topleft", c("lm", "PGLS"), lty = c(2, 1), lwd = c(1, 2), bty = "n")
 

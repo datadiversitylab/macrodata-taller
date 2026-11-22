@@ -1,7 +1,9 @@
 # Dia 2, bloque 1. Señal filogenetica y modelos de evolucion
 
 library(ape)
+###install.packages("geiger")
 library(geiger)
+###install.packages("phytools")
 library(phytools)
 
 load("datos/colibries_listo.RData")
@@ -19,6 +21,8 @@ altitud <- setNames(datos$altitud, rownames(datos))
 
 # Cuanto se parecen las especies emparentadas
 phylosig(arbol, masa, method = "lambda", test = TRUE)
+phylosig(arbol, masa, method = "lambda")
+
 phylosig(arbol, masa, method = "K", test = TRUE)
 
 phylosig(arbol, altitud, method = "lambda", test = TRUE)
@@ -28,6 +32,7 @@ phylosig(arbol, altitud, method = "lambda", test = TRUE)
 # Verlo ayuda mas que el numero
 contMap(arbol, masa, fsize = 0.3)
 
+contMap(arbol, altitud, fsize = 0.5)
 
 # --- Modelos de evolucion de caracteres continuos ----------------------------
 
@@ -59,8 +64,13 @@ ancestral <- ace(masa, arbol, type = "continuous")
 head(ancestral$ace)
 
 plot(arbol, cex = 0.25, no.margin = TRUE)
-nodelabels(round(ancestral$ace, 1), cex = 0.3, frame = "none")
+nodelabels(round(ancestral$ace, 1), cex = 0.5, frame = "none")
 
+ancestral1 <- ace(altitud, arbol, type = "continuous")
+head(ancestral1$ace)
+
+plot(arbol, cex = 0.25, no.margin = TRUE)
+nodelabels(round(ancestral1$ace, 1), cex = 0.5, frame = "none")
 
 # --- Contrastes independientes -----------------------------------------------
 
@@ -69,7 +79,26 @@ cm <- pic(masa, multi2di(arbol))
 ca <- pic(altitud, multi2di(arbol))
 
 plot(ca, cm, pch = 16, xlab = "Contrastes de altitud", ylab = "Contrastes de log masa")
-abline(h = 0, v = 0, col = "gray70")
+abline(h = 0, v = 0, col = "red")
+
 
 # La regresion sobre contrastes va sin intercepto
 summary(lm(cm ~ ca - 1))
+
+summary(lm(cm ~ ca))
+
+
+##################################################
+
+comparacion <- data.frame(
+  modelo = c("BM", "OU", "EB"),
+  aicc = c(bm$opt$aicc, ou$opt$aicc, eb$opt$aicc)
+)
+comparacion[order(comparacion$aicc), ]
+
+
+comparacion$delta_aicc <- comparacion$aicc - min(comparacion$aicc)
+
+
+comparacion <- comparacion[order(comparacion$aicc), ]
+comparacion
